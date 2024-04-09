@@ -8,3 +8,5 @@ Ethan Bleier
 Shea Gallagher
 Project 02: CRUD App Android
 CST 338 SP24 Section 02
+
+https://drive.google.com/drive/folders/1uQxzQS1ZWix5gmjUIgns0QvHRBr_fl5U?usp=drive_link
