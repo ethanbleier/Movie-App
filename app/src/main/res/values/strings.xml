@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Movie</string>
     <string name="add_movie">Add Movie</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="log_in">Log in</string>
+    <string name="enter_username">Enter username</string>
+    <string name="next">Next</string>
+    <string name="sign_up">Sign up</string>
 </resources>

@@ -1,8 +1,12 @@
-package com.example.movie;
+package com.example.movie.data;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.movie.data.MovieDao;
+import com.example.movie.data.MovieRoomDatabase;
+import com.example.movie.model.Movie;
 
 import java.util.List;
 

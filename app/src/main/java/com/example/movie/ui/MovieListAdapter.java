@@ -1,10 +1,12 @@
-package com.example.movie;
+package com.example.movie.ui;
 
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.movie.model.Movie;
 
 public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
 

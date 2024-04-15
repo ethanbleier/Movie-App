@@ -2,7 +2,7 @@
  * Movie class
  */
 
-package com.example.movie;
+package com.example.movie.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
