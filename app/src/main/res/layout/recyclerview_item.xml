@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/movie_title"
+        style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_light" />
