@@ -1,6 +1,8 @@
 package com.example.myapplication.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(v -> navigateToSignUpActivity());
+
         TextView username = findViewById(R.id.tvUsername);
 
         String currentUserUsername = getLoggedInUsername();
@@ -35,5 +40,10 @@ public class MainActivity extends AppCompatActivity {
             return loggedInUser.getmUsername();
         }
         return "No user found";
+    }
+
+    private void navigateToSignUpActivity() {
+        Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intent);
     }
 }

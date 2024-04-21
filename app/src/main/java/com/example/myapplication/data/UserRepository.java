@@ -18,6 +18,13 @@ public class UserRepository {
         mAllUsers = mUserDao.getAll();
     }
 
+    // ... deletes all the users from db
+    public void deleteAllUsers() {
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mUserDao.deleteAllUsers();
+        });
+    }
+
     LiveData<List<User>> getAllUsers() {
         return mAllUsers;
     }

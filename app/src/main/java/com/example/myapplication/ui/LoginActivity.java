@@ -9,21 +9,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.data.UserDao;
+import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 import com.example.myapplication.R;
 import com.example.myapplication.model.UserManager;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private UserDao userDao;
+    private UserRepository userRepository;
     private EditText etUsername;
     private EditText etPassword;
-    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        userRepository = new UserRepository(getApplication());
+        userRepository.deleteAllUsers();
+
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
+        userDao = db.userDao();
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -35,13 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // login button listener
         btnLogin.setOnClickListener(v -> {
-            UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-            userDao = db.userDao();
-
             String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
 
-            User user = userDao.findByUsername(username);
             boolean loggedIn = UserManager.login(username, password);
 
             if (loggedIn) {
@@ -53,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // nice navigation functions
+    // navigation functions
     private void navigateToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

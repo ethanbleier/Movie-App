@@ -3,6 +3,7 @@ package com.example.myapplication.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,18 +15,23 @@ import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 
 public class SignupActivity extends AppCompatActivity {
-
+    private UserDao userDao;
     private EditText etUsername, etPassword, etConfirmPassword;
+    private Checkable etIsAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
+        userDao = db.userDao();
+
         // views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etcPassword);
+        etIsAdmin = findViewById(R.id.etIsAdmin);
         Button btnSignup = findViewById(R.id.btnSignUp);
 
         btnSignup.setOnClickListener(v -> signupUser());
@@ -35,10 +41,11 @@ public class SignupActivity extends AppCompatActivity {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
+        boolean isAdmin = Boolean.parseBoolean(etIsAdmin.toString().trim());
 
         // input validation
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(SignupActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignupActivity.this, "fill in all fields please", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -48,11 +55,13 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         // Create new user and add to db
-        User user = new User(username, password);
+        User user = new User(username, password, isAdmin);
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            UserRoomDatabase.getDatabase(SignupActivity.this).userDao().insert(user);
-            navigateToMainActivity();
-            Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+            userDao.insert(user);
+            runOnUiThread(() -> {
+                Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+                navigateToMainActivity();
+            });
         });
     }
 

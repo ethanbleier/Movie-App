@@ -11,6 +11,10 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
+
+    @Query("DELETE FROM user")
+    void deleteAllUsers();
+
     @Query("SELECT * FROM user")
     LiveData<List<User>> getAll();
 
