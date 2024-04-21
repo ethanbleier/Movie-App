@@ -49,11 +49,11 @@ public class SignupActivity extends AppCompatActivity {
 
         // Create new user and add to db
         User user = new User(username, password);
-        UserRoomDatabase.databaseWriteExecutor.execute(() -> UserRoomDatabase.getDatabase(SignupActivity.this).userDao().insert(user));
-
-        // success message
-        Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            UserRoomDatabase.getDatabase(SignupActivity.this).userDao().insert(user);
+            navigateToMainActivity();
+            Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void navigateToMainActivity() {

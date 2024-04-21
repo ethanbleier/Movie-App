@@ -25,4 +25,10 @@ public interface UserDao {
 
     @Insert()
     void insert(User user);
+
+    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username)")
+    boolean is_taken(String username);
+
+    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username AND password=:password)")
+    boolean login(String username, String password);
 }

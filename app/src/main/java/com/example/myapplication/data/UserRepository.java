@@ -9,7 +9,7 @@ import com.example.myapplication.model.User;
 import java.util.List;
 
 public class UserRepository {
-    private UserDao mUserDao;
+    private static UserDao mUserDao;
     private LiveData<List<User>> mAllUsers;
 
     public UserRepository(Application application) {
@@ -28,7 +28,7 @@ public class UserRepository {
         });
     }
 
-    public User findByUsernameAndPassword(String username, String password) {
+    public static User findByUsernameAndPassword(String username, String password) {
         return mUserDao.findByUsernameAndPassword(username, password);
     }
 }

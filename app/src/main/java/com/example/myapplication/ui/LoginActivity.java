@@ -12,12 +12,12 @@ import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 import com.example.myapplication.R;
+import com.example.myapplication.model.UserManager;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername;
     private EditText etPassword;
-
     private UserDao userDao;
 
     @Override
@@ -30,24 +30,24 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnNext);
         Button btnSignUp = findViewById(R.id.btnSignUp);
 
-        UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-        userDao = db.userDao();
-
+        // sign up button listener
         btnSignUp.setOnClickListener(v -> navigateToSignUpActivity());
 
         // login button listener
         btnLogin.setOnClickListener(v -> {
+            UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
+            userDao = db.userDao();
+
             String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
 
             User user = userDao.findByUsername(username);
+            boolean loggedIn = UserManager.login(username, password);
 
-            if (user != null && user.checkPassword(password)) {
-                // Login successful
+            if (loggedIn) {
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                 navigateToMainActivity();
             } else {
-                // Login failed
                 Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
         });
@@ -57,12 +57,10 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private void navigateToSignUpActivity() {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
-        finish();
     }
 }
