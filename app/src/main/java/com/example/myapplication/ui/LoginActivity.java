@@ -8,10 +8,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
+import com.example.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
 

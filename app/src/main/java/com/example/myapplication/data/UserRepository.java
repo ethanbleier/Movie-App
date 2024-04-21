@@ -8,11 +8,11 @@ import com.example.myapplication.model.User;
 
 import java.util.List;
 
-class UserRepository {
+public class UserRepository {
     private UserDao mUserDao;
     private LiveData<List<User>> mAllUsers;
 
-    UserRepository(Application application) {
+    public UserRepository(Application application) {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
         mUserDao = db.userDao();
         mAllUsers = mUserDao.getAll();
@@ -26,5 +26,9 @@ class UserRepository {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
             mUserDao.insert(User);
         });
+    }
+
+    public User findByUsernameAndPassword(String username, String password) {
+        return mUserDao.findByUsernameAndPassword(username, password);
     }
 }

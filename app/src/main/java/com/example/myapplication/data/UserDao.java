@@ -20,6 +20,9 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE password LIKE :password")
     User findByPassword(String password);
 
+    @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
+    User findByUsernameAndPassword(String username, String password);
+
     @Insert()
     void insert(User user);
 }

@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.movie'
+    namespace 'com.example.myapplication'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.movie"
+        applicationId "com.example.myapplication"
         minSdk 34
         targetSdk 34
         versionCode 1
