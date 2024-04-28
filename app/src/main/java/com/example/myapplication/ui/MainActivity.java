@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button back = findViewById(R.id.back);
-        back.setOnClickListener(v -> navigateToSignUpActivity());
 
+        Button back = findViewById(R.id.back);
+        Button addMovie = findViewById(R.id.add_button);
         TextView username = findViewById(R.id.tvUsername);
 
         String currentUserUsername = getLoggedInUsername();
@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             username.setText("DB ERROR\nNo Username Found");
         }
+
+        // button on click listeners
+        back.setOnClickListener(v -> navigateToSignUpActivity());
+        addMovie.setOnClickListener(v -> navigateToAddMovieActivity());
     }
 
     private String getLoggedInUsername() {
@@ -44,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToSignUpActivity() {
         Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intent);
+    }
+
+    private void navigateToAddMovieActivity() {
+        Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);
         startActivity(intent);
     }
 }
