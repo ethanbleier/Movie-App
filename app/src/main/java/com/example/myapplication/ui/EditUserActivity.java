@@ -16,11 +16,13 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
 
+import java.time.LocalDateTime;
+
 public class EditUserActivity extends AppCompatActivity {
     private UserDao userDao;
     private EditText etUsername;
     private EditText etPassword;
-
+    private LocalDateTime date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
