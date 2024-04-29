@@ -20,8 +20,7 @@ import java.time.LocalDateTime;
 
 public class EditUserActivity extends AppCompatActivity {
     private UserDao userDao;
-    private EditText etUsername;
-    private EditText etPassword;
+    private EditText etUsername, etPassword;
     private LocalDateTime date;
 
     @Override

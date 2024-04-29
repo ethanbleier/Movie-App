@@ -53,4 +53,20 @@ public class Movie {
     public String getmYear() {
         return mYear;
     }
+
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public void setmDirector(String mDirector) {
+        this.mDirector = mDirector;
+    }
+
+    public void setmGenre(String mGenre) {
+        this.mGenre = mGenre;
+    }
+
+    public void setmYear(String mYear) {
+        this.mYear = mYear;
+    }
 }

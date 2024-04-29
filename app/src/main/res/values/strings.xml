@@ -23,4 +23,10 @@
     <string name="sign_out">Sign Out</string>
     <string name="add_new_user">Add new user</string>
     <string name="add_user">Add User</string>
+    <string name="edit_movie">Edit Movie</string>
+    <string name="delete_movie">Delete Movie</string>
+    <string name="title_placeholder">Title: Placeholder</string>
+    <string name="director_placeholder">Director: Placeholder</string>
+    <string name="movie_info">Movie Info</string>
+    <string name="update_movie_info">Update Movie Info</string>
 </resources>
