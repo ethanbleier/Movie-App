@@ -8,25 +8,4 @@
     <string name="sign_up">Sign up</string>
     <string name="password">Password</string>
     <string name="enter_a_password">Enter a password</string>
-    <string name="admin">Admin</string>
-    <string name="adminbox">Admin?</string>
-    <string name="edit_user">Edit User</string>
-    <string name="edit_password">Edit Password</string>
-    <string name="edit_username">Edit Username</string>
-    <string name="update">Update</string>
-    <string name="delete_user">Delete User</string>
-    <string name="back">back</string>
-    <string name="enter_movie_title">Enter movie title</string>
-    <string name="enter_director">Enter director</string>
-    <string name="enter_genre">Enter genre</string>
-    <string name="enter_release_year">Enter release year</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="add_new_user">Add new user</string>
-    <string name="add_user">Add User</string>
-    <string name="edit_movie">Edit Movie</string>
-    <string name="delete_movie">Delete Movie</string>
-    <string name="title_placeholder">Title: Placeholder</string>
-    <string name="director_placeholder">Director: Placeholder</string>
-    <string name="movie_info">Movie Info</string>
-    <string name="update_movie_info">Update Movie Info</string>
 </resources>

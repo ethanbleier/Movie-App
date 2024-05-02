@@ -33,8 +33,10 @@ public class SignupActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etcPassword);
         etIsAdmin = findViewById(R.id.etIsAdmin);
         Button btnSignup = findViewById(R.id.btnSignUp);
-
+        Button btnBack = findViewById(R.id.btnBackToSignIn);
         btnSignup.setOnClickListener(v -> signupUser());
+        btnBack.setOnClickListener(v -> goSignIn());
+
     }
 
     private void signupUser() {
@@ -55,18 +57,16 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         // Create new user and add to db
-        User user = new User(username, password, isAdmin);
-        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            userDao.insert(user);
-            runOnUiThread(() -> {
-                Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-                navigateToMainActivity();
-            });
-        });
     }
 
-    private void navigateToMainActivity() {
+    private void goMain() {
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goSignIn() {
+        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
