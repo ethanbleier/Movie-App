@@ -9,13 +9,20 @@ import com.example.myapplication.model.User;
 import java.util.List;
 
 public class UserRepository {
-    private UserDao mUserDao;
+    private static UserDao mUserDao;
     private LiveData<List<User>> mAllUsers;
 
     public UserRepository(Application application) {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
         mUserDao = db.userDao();
         mAllUsers = mUserDao.getAll();
+    }
+
+    // ... deletes all the users from db
+    public void deleteAllUsers() {
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mUserDao.deleteAllUsers();
+        });
     }
 
     LiveData<List<User>> getAllUsers() {
@@ -28,7 +35,7 @@ public class UserRepository {
         });
     }
 
-    public User findByUsernameAndPassword(String username, String password) {
+    public static User findByUsernameAndPassword(String username, String password) {
         return mUserDao.findByUsernameAndPassword(username, password);
     }
 }

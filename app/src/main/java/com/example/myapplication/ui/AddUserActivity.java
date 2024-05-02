@@ -7,67 +7,61 @@ import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 
-public class SignupActivity extends AppCompatActivity {
+public class AddUserActivity extends AppCompatActivity {
     private UserDao userDao;
-    private EditText etUsername, etPassword, etConfirmPassword;
+    private EditText etUsername, etPassword;
     private Checkable etIsAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_add_user);
 
         UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
         userDao = db.userDao();
 
-        // views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        etConfirmPassword = findViewById(R.id.etcPassword);
+        Button btnAddNewUser = findViewById(R.id.btnAddNewUser);
+        Button btnBack = findViewById(R.id.btnBack);
         etIsAdmin = findViewById(R.id.etIsAdmin);
-        Button btnSignup = findViewById(R.id.btnSignUp);
-        Button btnBack = findViewById(R.id.btnBackToSignIn);
-        btnSignup.setOnClickListener(v -> signupUser());
-        btnBack.setOnClickListener(v -> goSignIn());
 
+        btnBack.setOnClickListener(v -> navigateToAdminMainActivity());
+        btnAddNewUser.setOnClickListener(v -> signupUser());
     }
 
     private void signupUser() {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String confirmPassword = etConfirmPassword.getText().toString().trim();
         boolean isAdmin = Boolean.parseBoolean(etIsAdmin.toString().trim());
 
         // input validation
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(SignupActivity.this, "fill in all fields please", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(AddUserActivity.this, "fill in all fields please", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Create new user and add to db
+        User user = new User(username, password, isAdmin);
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            userDao.insert(user);
+
+        });
     }
 
-    private void goMain() {
-        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+    private void navigateToAdminMainActivity() {
+        Intent intent = new Intent(AddUserActivity.this, AdminMainActivity.class);
         startActivity(intent);
-        finish();
-    }
-
-    private void goSignIn() {
-        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

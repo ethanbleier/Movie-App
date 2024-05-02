@@ -11,19 +11,19 @@ public class UserManager {
         userRepository = new UserRepository(application);
     }
 
-    public boolean login(String username, String password) {
-        User user = userRepository.findByUsernameAndPassword(username, password);
+    public static boolean login(String username, String password) {
+        User user = UserRepository.findByUsernameAndPassword(username, password);
         if (user != null) {
             loggedInUser = user;
-            // Perform additional login operations, if needed
             return true;
         }
         return false;
     }
 
+
+
     public void logout() {
         loggedInUser = null;
-        // Perform additional logout operations, if needed
     }
 
     public boolean isLoggedIn() {

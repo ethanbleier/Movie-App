@@ -17,9 +17,10 @@ public class User {
     public String mPassword;
 
     @ColumnInfo(name = "isAdmin")
-    public boolean isAdmin;
+    public boolean mIsAdmin;
 
-    public User(@NonNull String username, String password) {
+    public User(@NonNull String username, String password, boolean isAdmin) {
+        this.mIsAdmin = isAdmin();
         this.mUsername = username;
         this.mPassword = password;
     }
@@ -28,12 +29,13 @@ public class User {
         return attempt.equals(mPassword);
     }
 
+    // get admin
     public boolean isAdmin() {
-        return this.isAdmin;
+        return this.mIsAdmin;
     }
 
     public void makeAdmin() {
-        this.isAdmin = true;
+        this.mIsAdmin = true;
     }
 
     public int getUid() {
