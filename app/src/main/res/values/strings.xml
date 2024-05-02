@@ -8,4 +8,8 @@
     <string name="sign_up">Sign up</string>
     <string name="password">Password</string>
     <string name="enter_a_password">Enter a password</string>
+    <string name="back">back</string>
+    <string name="backbutton">backButton</string>
+    <string name="go_back_to_sign_up_page">Go back to sign up page</string>
+    <string name="back_to_sign_in_page">back to sign in page</string>
 </resources>

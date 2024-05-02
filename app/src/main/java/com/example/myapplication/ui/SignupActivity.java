@@ -27,8 +27,10 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etcPassword);
         Button btnSignup = findViewById(R.id.btnSignUp);
-
+        Button btnBack = findViewById(R.id.btnBackToSignIn);
         btnSignup.setOnClickListener(v -> signupUser());
+        btnBack.setOnClickListener(v -> goSignIn());
+
     }
 
     private void signupUser() {
@@ -53,11 +55,17 @@ public class SignupActivity extends AppCompatActivity {
 
         // success message
         Toast.makeText(SignupActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        goMain();
     }
 
-    private void navigateToMainActivity() {
+    private void goMain() {
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goSignIn() {
+        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
