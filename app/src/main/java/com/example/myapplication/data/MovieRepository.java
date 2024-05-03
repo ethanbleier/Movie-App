@@ -10,13 +10,13 @@ public class MovieRepository {
     private LiveData<List<Movie>> mAllMovies;
 
     public MovieRepository(Application application) {
-        RatingRoomDatabase db = RatingRoomDatabase.getDatabase(application);
+        MovieRoomDatabase db = MovieRoomDatabase.getDatabase(application);
         mMovieDao = db.movieDao();
         mAllMovies = mMovieDao.getAll();
     }
 
     public void deleteAllMovies() {
-        RatingRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
             mMovieDao.deleteAllMovies();
         });
     }
@@ -26,13 +26,13 @@ public class MovieRepository {
     }
 
     void insert(Movie movie) {
-        RatingRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
             mMovieDao.insert(movie);
         });
     }
 
     void delete(Movie movie) {
-        RatingRoomDatabase.databaseWriteExecutor.execute(() ->{
+        MovieRoomDatabase.databaseWriteExecutor.execute(() ->{
             mMovieDao.delete(movie);
         });
     }

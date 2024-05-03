@@ -10,18 +10,18 @@ import java.util.concurrent.Executors;
 
 public abstract class MovieRoomDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
-    private static volatile RatingRoomDatabase INSTANCE;
+    private static volatile MovieRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
 
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static RatingRoomDatabase getDatabase(final Context context) {
+    public static MovieRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (RatingRoomDatabase.class) {
+            synchronized (MovieRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    RatingRoomDatabase.class, "movie_database")
+                                    MovieRoomDatabase.class, "movie_database")
                             .build();
                 }
             }

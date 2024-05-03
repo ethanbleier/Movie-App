@@ -5,7 +5,9 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.myapplication.model.User;
+import com.example.myapplication.model.Review;
+
+import java.util.List;
 
 @Dao
 public interface ReviewDao {
@@ -14,10 +16,16 @@ public interface ReviewDao {
     void deleteAllReviews();
 
     @Query("SELECT * FROM reviews")
-    LiveData<List<reviews>> getAll();
+    LiveData<List<Review>> getAll();
 
     @Query("SELECT * FROM reviews WHERE movieId LIKE :movieId")
-    User findByUsername(String username);
+    Review findByMovieId(int movieId);
+
+    @Insert()
+    void insert(Review review);
+
+    @Query("SELECT EXISTS (SELECT * FROM user WHERE movieId=:movieId)")
+    boolean is_reviewed(int movieId);
 }
 
 

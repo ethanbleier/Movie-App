@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
-import com.example.myapplication.model.User;
 import com.example.myapplication.R;
-import com.example.myapplication.model.UserManager;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
@@ -24,8 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UserRepository userRepository = new UserRepository(getApplication());
-        userRepository.deleteAllUsers();
+        UserRepository reviewRepository = new UserRepository(getApplication());
 
         UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
         UserDao userDao = db.userDao();

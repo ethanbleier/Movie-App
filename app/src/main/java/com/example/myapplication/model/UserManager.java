@@ -7,7 +7,7 @@ public class UserManager {
     private static User loggedInUser;
 
     public UserManager(Application application) {
-        UserRepository userRepository = new UserRepository(application);
+        UserRepository reviewRepository = new UserRepository(application);
     }
 
     public static boolean login(String username, String password) {

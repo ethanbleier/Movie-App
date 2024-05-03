@@ -19,7 +19,7 @@ public class UserRepository {
     }
 
     // ... deletes all the users from db
-    public void deleteAllUsers() {
+    public static void deleteAllUsers() {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
             mUserDao.deleteAllUsers();
         });
