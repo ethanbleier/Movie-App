@@ -8,8 +8,8 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public abstract class MovieRoomDatabase extends RoomDatabase {
-    public abstract MovieDao movieDao();
+public abstract class RatingRoomDatabase extends RoomDatabase {
+    public abstract RatingDao ratingDao();
     private static volatile RatingRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
 
@@ -21,7 +21,7 @@ public abstract class MovieRoomDatabase extends RoomDatabase {
             synchronized (RatingRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    RatingRoomDatabase.class, "movie_database")
+                                    RatingRoomDatabase.class, "rating_database")
                             .build();
                 }
             }

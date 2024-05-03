@@ -2,7 +2,6 @@ package com.example.myapplication.data;
 import android.app.Application;
 import androidx.lifecycle.LiveData;
 import com.example.myapplication.model.Movie;
-import com.example.myapplication.model.User;
 
 import java.util.List;
 
@@ -11,13 +10,13 @@ public class MovieRepository {
     private LiveData<List<Movie>> mAllMovies;
 
     public MovieRepository(Application application) {
-        MovieRoomDatabase db = MovieRoomDatabase.getDatabase(application);
+        RatingRoomDatabase db = RatingRoomDatabase.getDatabase(application);
         mMovieDao = db.movieDao();
         mAllMovies = mMovieDao.getAll();
     }
 
     public void deleteAllMovies() {
-        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
+        RatingRoomDatabase.databaseWriteExecutor.execute(() -> {
             mMovieDao.deleteAllMovies();
         });
     }
@@ -27,13 +26,13 @@ public class MovieRepository {
     }
 
     void insert(Movie movie) {
-        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
+        RatingRoomDatabase.databaseWriteExecutor.execute(() -> {
             mMovieDao.insert(movie);
         });
     }
 
     void delete(Movie movie) {
-        MovieRoomDatabase.databaseWriteExecutor.execute(() ->{
+        RatingRoomDatabase.databaseWriteExecutor.execute(() ->{
             mMovieDao.delete(movie);
         });
     }
