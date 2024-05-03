@@ -107,11 +107,10 @@
         android:layout_marginEnd="32dp"
         android:background="@android:color/holo_blue_light"
         android:text="Update"
-        android:textColor="@android:color/white"
+        android:textColor="#4E342E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etYear"
-        />
+        app:layout_constraintTop_toBottomOf="@id/etYear" />
 
     <Button
         android:id="@+id/btnBack"

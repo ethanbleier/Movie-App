@@ -16,7 +16,6 @@ import com.example.myapplication.model.User;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText etUsername, etPassword, etConfirmPassword;
-    private final Checkable etIsAdmin = findViewById(R.id.etIsAdmin);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class SignupActivity extends AppCompatActivity {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
-        boolean isAdmin = Boolean.parseBoolean(etIsAdmin.toString().trim());
 
         // input validation
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {

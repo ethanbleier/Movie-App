@@ -89,11 +89,10 @@
         android:layout_marginEnd="32dp"
         android:background="@android:color/holo_blue_light"
         android:text="Edit movie"
-        android:textColor="@android:color/white"
+        android:textColor="#4E342E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMovieYear"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tvMovieYear" />
 
     <Button
         android:id="@+id/btnDeleteMovie"
@@ -104,11 +103,10 @@
         android:layout_marginEnd="32dp"
         android:background="@android:color/holo_red_light"
         android:text="Delete movie"
-        android:textColor="@android:color/white"
+        android:textColor="#212121"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditMovie"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btnEditMovie" />
 
     <Button
         android:id="@+id/btnBack"
