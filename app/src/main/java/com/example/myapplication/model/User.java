@@ -20,7 +20,7 @@ public class User {
     public boolean mIsAdmin;
 
     public User(@NonNull String username, String password, boolean isAdmin) {
-        this.mIsAdmin = isAdmin();
+        this.mIsAdmin = false;
         this.mUsername = username;
         this.mPassword = password;
     }

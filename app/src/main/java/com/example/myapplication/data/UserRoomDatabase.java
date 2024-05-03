@@ -9,11 +9,13 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.example.myapplication.model.User;
+import com.example.myapplication.typeConverters.LocalDateTypeConverter;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@TypeConverters(LocalDateTypeConverter.class)
 @Database(entities = {User.class}, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
