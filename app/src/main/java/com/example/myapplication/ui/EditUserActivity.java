@@ -42,7 +42,6 @@ public class EditUserActivity extends AppCompatActivity {
             Toast.makeText(EditUserActivity.this, "Account info updated", Toast.LENGTH_SHORT).show();
         });
 
-
         // delete user button listener
         btnDeleteUser.setOnClickListener(v -> {
             //TODO: delete user from database

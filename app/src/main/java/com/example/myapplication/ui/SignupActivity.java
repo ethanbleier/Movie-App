@@ -15,9 +15,8 @@ import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 
 public class SignupActivity extends AppCompatActivity {
-    private UserDao userDao;
     private EditText etUsername, etPassword, etConfirmPassword;
-    private Checkable etIsAdmin;
+    private final Checkable etIsAdmin = findViewById(R.id.etIsAdmin);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +24,12 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-        userDao = db.userDao();
+        UserDao userDao = db.userDao();
 
         // views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etcPassword);
-        etIsAdmin = findViewById(R.id.etIsAdmin);
         Button btnSignup = findViewById(R.id.btnSignUp);
         Button btnBack = findViewById(R.id.btnBackToSignIn);
         btnSignup.setOnClickListener(v -> signupUser());

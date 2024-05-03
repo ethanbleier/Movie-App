@@ -1,5 +1,4 @@
 package com.example.myapplication.typeConverters;
-
 import androidx.room.TypeConverter;
 
 import java.time.Instant;
