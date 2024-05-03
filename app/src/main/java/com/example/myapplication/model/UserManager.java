@@ -4,11 +4,10 @@ import android.app.Application;
 import com.example.myapplication.data.UserRepository;
 
 public class UserManager {
-    private final UserRepository userRepository;
     private static User loggedInUser;
 
     public UserManager(Application application) {
-        userRepository = new UserRepository(application);
+        UserRepository userRepository = new UserRepository(application);
     }
 
     public static boolean login(String username, String password) {
@@ -19,8 +18,6 @@ public class UserManager {
         }
         return false;
     }
-
-
 
     public void logout() {
         loggedInUser = null;
