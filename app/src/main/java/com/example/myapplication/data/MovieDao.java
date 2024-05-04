@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import com.example.myapplication.model.Movie;
 
@@ -30,7 +31,7 @@ public interface MovieDao {
     @Query("SELECT * FROM movie WHERE year LIKE :year")
     Movie findByYear(String year);
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie movie);
 
     @Delete

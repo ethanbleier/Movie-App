@@ -9,16 +9,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.MovieDao;
+import com.example.myapplication.data.MovieRoomDatabase;
 import com.example.myapplication.model.Movie;
 
 
 public class AddMovieActivity extends AppCompatActivity {
     private EditText etTitle, etDirector, etGenre, etYear;
+    MovieRoomDatabase db = MovieRoomDatabase.getDatabase(getApplicationContext());
+    MovieDao movieDao = db.movieDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie);
+
+
 
         etTitle = findViewById(R.id.etTitle);
         etDirector = findViewById(R.id.etDirector);
@@ -45,6 +51,8 @@ public class AddMovieActivity extends AppCompatActivity {
 
         //TODO: add movie obj to database?
         Movie movie = new Movie(title, director, genre, year);
+        movieDao.insert(movie);
+
     }
 
     private void navigateToMainActivity() {
