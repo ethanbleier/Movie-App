@@ -24,15 +24,12 @@ public class AddMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie);
 
-
-
         etTitle = findViewById(R.id.etTitle);
         etDirector = findViewById(R.id.etDirector);
         etGenre = findViewById(R.id.etGenre);
         etYear = findViewById(R.id.etYear);
         Button btnAddMovie = findViewById(R.id.btnAddMovie);
         Button btnBack = findViewById(R.id.btnBack);
-
 
         btnBack.setOnClickListener(v -> navigateToMainActivity());
         btnAddMovie.setOnClickListener(v -> addMovie());
@@ -45,14 +42,13 @@ public class AddMovieActivity extends AppCompatActivity {
         String year = etYear.getText().toString().trim();
 
         //input validation
-        if(title.isEmpty()) {
-            Toast.makeText(AddMovieActivity.this, "Entry must include a title", Toast.LENGTH_SHORT).show();
+        if(title.isEmpty()||director.isEmpty()||genre.isEmpty()||year.isEmpty()) {
+            Toast.makeText(AddMovieActivity.this, "Entry is missing fields", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        //TODO: add movie obj to database?
         Movie movie = new Movie(title, director, genre, year);
         movieDao.insert(movie);
-
     }
 
     private void navigateToMainActivity() {

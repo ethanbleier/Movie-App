@@ -22,6 +22,12 @@ public class MovieRepository {
         });
     }
 
+    public void deleteMovie(Movie movie) {
+        MovieRoomDatabase.databaseWriteExecutor.execute(() ->{
+            mMovieDao.delete(movie);
+        });
+    }
+
     LiveData<List<Movie>> getAllMovies() {
         return mAllMovies;
     }
