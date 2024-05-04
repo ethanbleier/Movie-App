@@ -12,19 +12,19 @@ import java.util.List;
 @Dao
 public interface ReviewDao {
 
-    @Query("DELETE FROM review")
+    @Query("DELETE FROM reviews")
     void deleteAllReviews();
 
     @Query("SELECT * FROM reviews")
-    LiveData<List<Review>> getAll();
+    LiveData<List<Review>> getAllReviews();
 
     @Query("SELECT * FROM reviews WHERE movieId LIKE :movieId")
-    Review findByMovieId(int movieId);
+    Review findReviewByMovieId(int movieId);
 
     @Insert()
-    void insert(Review review);
+    void insertReview(Review review);
 
-    @Query("SELECT EXISTS (SELECT * FROM user WHERE movieId=:movieId)")
+    @Query("SELECT EXISTS (SELECT * FROM reviews WHERE movieId=:movieId)")
     boolean is_reviewed(int movieId);
 }
 

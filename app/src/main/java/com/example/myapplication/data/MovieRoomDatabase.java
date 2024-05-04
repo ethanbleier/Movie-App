@@ -2,12 +2,16 @@ package com.example.myapplication.data;
 
 import android.content.Context;
 
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.example.myapplication.model.Movie;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Database(entities = {Movie.class}, version = 3, exportSchema = false)
 public abstract class MovieRoomDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
     private static volatile MovieRoomDatabase INSTANCE;

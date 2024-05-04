@@ -2,12 +2,16 @@ package com.example.myapplication.data;
 
 import android.content.Context;
 
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.example.myapplication.model.Rating;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Database(entities = {Rating.class}, version = 3, exportSchema = false)
 public abstract class RatingRoomDatabase extends RoomDatabase {
     public abstract RatingDao ratingDao();
     private static volatile RatingRoomDatabase INSTANCE;

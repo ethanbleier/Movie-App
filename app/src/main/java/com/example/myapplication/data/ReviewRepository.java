@@ -3,8 +3,10 @@ package com.example.myapplication.data;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Database;
 
 import com.example.myapplication.model.Review;
+import com.example.myapplication.model.User;
 
 import java.util.List;
 
