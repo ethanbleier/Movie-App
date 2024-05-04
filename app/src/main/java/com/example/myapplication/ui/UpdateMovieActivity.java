@@ -18,7 +18,7 @@ import com.example.myapplication.model.Movie;
 
 public class UpdateMovieActivity extends AppCompatActivity {
     private EditText etTitle, etDirector, etGenre, etYear;
-    Movie movie = null; //TODO: access movie object
+    Movie movie = null; //TODO: access actual movie object
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

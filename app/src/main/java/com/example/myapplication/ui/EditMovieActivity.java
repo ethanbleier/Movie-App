@@ -1,11 +1,13 @@
 package com.example.myapplication.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,9 +29,6 @@ public class EditMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_movie);
 
-        //TODO: access current logged in user info
-        User currUser = null;
-
         TextView tvMovieTitle = findViewById(R.id.tvMovieTitle);
         TextView tvMovieDirector = findViewById(R.id.tvMovieDirector);
         TextView tvMovieGenre = findViewById(R.id.tvMovieGenre);
@@ -47,6 +46,7 @@ public class EditMovieActivity extends AppCompatActivity {
         // back button listener
         btnBack.setOnClickListener(v -> {
             // navigation based on user's admin status
+            User currUser = UserManager.getLoggedInUser();
             if(currUser.isAdmin()) {
                 navigateToAdminMainActivity();
             } else {
@@ -60,9 +60,24 @@ public class EditMovieActivity extends AppCompatActivity {
 
         // delete movie button listener
         btnDeleteMovie.setOnClickListener(v -> {
-            //TODO: pop up notif confirming deletion
-            deleteMovie();
-
+            // alert set up
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditMovieActivity.this);
+            final AlertDialog alertDialog = alertBuilder.create();
+            alertBuilder.setMessage("Are you sure you want to delete this movie?\n");
+            // user selects "yes"
+            alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    deleteMovie();
+                }
+            });
+            // user selects "No"
+            alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    alertDialog.dismiss();
+                }
+            });
         });
 
     }
@@ -99,7 +114,7 @@ public class EditMovieActivity extends AppCompatActivity {
 
 
     private void deleteMovie() {
-        //TODO: Delete movie from database
+        //TODO: Delete movie from database, include toast confirming deletion
     }
 
     private void navigateToMainActivity() {
