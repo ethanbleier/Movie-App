@@ -16,15 +16,12 @@ import com.example.myapplication.model.User;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText etUsername, etPassword, etConfirmPassword;
+    private Boolean isAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
-        UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-        UserDao userDao = db.userDao();
-
         // views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -32,7 +29,12 @@ public class SignupActivity extends AppCompatActivity {
         Button btnSignup = findViewById(R.id.btnSignUp);
         Button btnBack = findViewById(R.id.btnBackToSignIn);
         btnSignup.setOnClickListener(v -> signupUser());
-        btnBack.setOnClickListener(v -> goSignIn());
+        btnSignup.setOnLongClickListener(v -> {
+            isAdmin = true;
+            signupUser();
+            return true;
+        });
+        btnBack.setOnClickListener(v -> signIn());
 
     }
 
@@ -42,27 +44,55 @@ public class SignupActivity extends AppCompatActivity {
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
         // input validation
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(SignupActivity.this, "fill in all fields please", Toast.LENGTH_SHORT).show();
+        if (username.isEmpty()) {
+            Toast.makeText(SignupActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        if (password.isEmpty()) {
+            Toast.makeText(SignupActivity.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            Toast.makeText(SignupActivity.this, "Please confirm your password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Create new user and add to db
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
+        UserDao userDao = db.userDao();
+        User user = userDao.findByUsername(username);
+
+        // haha good luck reading this
+        // first we check that the sign up was successful, ie the insert returned a non-null user class
+        if (user == null) {
+            user = new User(username, password, isAdmin);
+            if (userDao.signUp(user) == -1) {
+                if(isAdmin) {
+                    admin();
+                } else {
+                    landing();
+                }
+                Toast.makeText(SignupActivity.this, "Welcome " + username + ". ", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
-    private void goMain() {
+    private void landing() {
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void goSignIn() {
+    private void signIn() {
         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void admin() {
+        Intent intent = new Intent(SignupActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }

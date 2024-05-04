@@ -54,7 +54,7 @@ public class AddUserActivity extends AppCompatActivity {
         // Create new user and add to db
         User user = new User(username, password, isAdmin.get());
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            userDao.insert(user);
+            userDao.signUp(user);
         });
     }
 

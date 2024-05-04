@@ -31,7 +31,7 @@ public class UserRepository {
 
     void insert(User User) {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mUserDao.insert(User);
+            mUserDao.signUp(User);
         });
     }
 

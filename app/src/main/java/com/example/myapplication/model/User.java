@@ -29,7 +29,6 @@ public class User {
         return attempt.equals(mPassword);
     }
 
-    // get admin
     public boolean isAdmin() {
         return this.mIsAdmin;
     }

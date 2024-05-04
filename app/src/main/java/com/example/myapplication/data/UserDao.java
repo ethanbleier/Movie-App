@@ -20,18 +20,12 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE username LIKE :username")
     User findByUsername(String username);
 
-    @Query("SELECT * FROM user WHERE password LIKE :password")
-    User findByPassword(String password);
-
     @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
     User findByUsernameAndPassword(String username, String password);
 
-    @Insert()
-    void insert(User user);
+    @Insert
+    long signUp(User user);
 
-    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username)")
-    boolean is_taken(String username);
-
-    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username AND password=:password)")
-    boolean login(String username, String password);
+    @Query("SELECT * FROM user WHERE username=:username AND password=:password")
+    User login(String username, String password);
 }
