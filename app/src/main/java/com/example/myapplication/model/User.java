@@ -20,17 +20,13 @@ public class User {
     public boolean mIsAdmin;
 
     public User(@NonNull String username, String password, boolean isAdmin) {
-        this.mIsAdmin = false;
+        this.mIsAdmin = isAdmin;
         this.mUsername = username;
         this.mPassword = password;
     }
 
-    public boolean checkPassword(String attempt) {
-        return attempt.equals(mPassword);
-    }
-
     public boolean isAdmin() {
-        return this.mIsAdmin;
+        return mIsAdmin;
     }
 
     public void makeAdmin() {
@@ -45,7 +41,7 @@ public class User {
         this.uid = uid;
     }
 
-    public String getmUsername() {
+    public String getUsername() {
         return this.mUsername;
     }
 }

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private String getLoggedInUsername() {
         User loggedInUser = UserManager.getLoggedInUser();
         if (loggedInUser != null) {
-            return loggedInUser.getmUsername();
+            return loggedInUser.getUsername();
         }
         return "No user found";
     }
