@@ -18,6 +18,11 @@ public class UserRepository {
         mAllUsers = mUserDao.getAll();
     }
 
+
+
+
+
+
     // ... deletes all the users from db
     public static void deleteAllUsers() {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {

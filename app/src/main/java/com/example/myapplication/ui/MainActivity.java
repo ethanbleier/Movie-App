@@ -2,27 +2,46 @@ package com.example.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
+import com.example.myapplication.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding binding;
+
     private final UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
     UserDao userDao = db.userDao();
+
+    int loggedInUserId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Button back = findViewById(R.id.back);
         Button addMovie = findViewById(R.id.add_button);
-        TextView username = findViewById(R.id.tvUsername);
+
+        binding.addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "add movie info next!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+//        loginUser();
+
 
 //        String currentUserUsername = getLoggedInUsername();
 //        if (currentUserUsername != null) {
@@ -42,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 //            return loggedInUser.getUsername();
 //        }
 //        return "No user found";
+//    }
+//
+//    private void loginUser() {
+//        userDao.signUp();
 //    }
 
     private void navigateToSignUpActivity() {

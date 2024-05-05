@@ -7,15 +7,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewbinding.ViewBinding;
 
 import com.example.myapplication.data.UserDao;
+import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.model.User;
 
 public class LoginActivity extends AppCompatActivity {
     private UserRoomDatabase db;
     private UserDao userDao;
+    private UserRepository respository;
+    ViewBinding binding;
 
     private EditText etUsername;
     private EditText etPassword;
@@ -23,7 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+//        repository = UserRepository.getRepository(getApplication());
 
         db = UserRoomDatabase.getDatabase(getApplicationContext());
         userDao = db.userDao();

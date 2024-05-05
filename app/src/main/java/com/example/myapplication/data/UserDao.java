@@ -3,6 +3,7 @@ package com.example.myapplication.data;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.myapplication.model.User;
@@ -23,7 +24,7 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
     User findByUsernameAndPassword(String username, String password);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long signUp(User user);
 
     @Query("SELECT * FROM user WHERE username=:username AND password=:password")

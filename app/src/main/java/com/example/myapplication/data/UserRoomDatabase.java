@@ -8,6 +8,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
+import com.example.myapplication.model.Movie;
+import com.example.myapplication.model.Rating;
+import com.example.myapplication.model.Review;
 import com.example.myapplication.model.User;
 import com.example.myapplication.typeConverters.LocalDateTypeConverter;
 
@@ -16,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Movie.class, Rating.class, Review.class}, version = 1, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
