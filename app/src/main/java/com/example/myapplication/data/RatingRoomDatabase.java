@@ -11,7 +11,7 @@ import com.example.myapplication.model.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Rating.class, User.class, Movie.class}, version = 1, exportSchema = false)
+@Database(entities = {Rating.class, User.class, Movie.class}, version = 2, exportSchema = false)
 public abstract class RatingRoomDatabase extends RoomDatabase {
     public abstract RatingDao ratingDao();
     private static volatile RatingRoomDatabase INSTANCE;

@@ -2,18 +2,13 @@ package com.example.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Toast; // oml
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewbinding.ViewBinding;
 
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
-import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.model.User;
 
@@ -33,15 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
         UserRepository repository = new UserRepository(getApplication());
 
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFieldFromDisplay();
-            }
-        });
+        // Next/sign in Button Listener
+        binding.btnNext.setOnClickListener(v -> getFieldFromDisplay());
 
-        // Sign up button
-        findViewById(R.id.btnSignUp).setOnClickListener(v -> signUpActivity());
+        // Go to Sign Up Button Listener
+        binding.btnSignUp.setOnClickListener(v -> signUpActivity());
     }
 
     // here we return true if the username or password inputted is valid.
@@ -54,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         return !text.isEmpty();
     }
 
+    // Method to read data from the text fields
     private void getFieldFromDisplay() {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
@@ -66,14 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (!validate(username)) {
-            binding.etUsername.setError("Invalid username!");
+            Toast.makeText(LoginActivity.this, "invalid username", Toast.LENGTH_SHORT).show();
         }
 
         if (!validate(password)) {
-            binding.etPassword.setError("Invalid password!");
+            Toast.makeText(LoginActivity.this, "invalid password", Toast.LENGTH_SHORT).show();
+//            binding.etPassword.setError("Invalid password!");
         }
     }
 
+    // Primary Login Method
     private void login() {
         User user = UserRepository.findByUsernameAndPassword(this.username, this.password);
 
@@ -93,7 +87,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // navigation functions
+    /**
+     *  ==== Navigation methods ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====
+     */
+
     private void landingActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
