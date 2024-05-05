@@ -2,18 +2,9 @@ package com.example.myapplication.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "ratings",
-    foreignKeys = {
-        @ForeignKey(entity = User.class,
-            parentColumns = "id",
-            childColumns = "userId"),
-        @ForeignKey(entity = Movie.class,
-            parentColumns = "id",
-            childColumns = "movieId")
-    })
+@Entity(tableName = "ratings")
 public class Rating {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -27,6 +18,40 @@ public class Rating {
     @ColumnInfo(name = "rating")
     private float rating;
 
-    @ColumnInfo(name = "timestamp")
-    private long timestamp;
+    public Rating(float rating) {
+        this.rating = rating;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 }
+

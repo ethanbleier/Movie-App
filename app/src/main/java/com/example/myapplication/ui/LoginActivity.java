@@ -14,8 +14,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.model.User;
 
 public class LoginActivity extends AppCompatActivity {
-    UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-    UserDao userDao = db.userDao();
+    private UserRoomDatabase db;
+    private UserDao userDao;
 
     private EditText etUsername;
     private EditText etPassword;
@@ -25,8 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
+        db = UserRoomDatabase.getDatabase(getApplicationContext());
+        userDao = db.userDao();
 
         // Login button
         Button btnNext = findViewById(R.id.btnNext);
@@ -69,10 +69,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void adminActivity() {
         Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void signUpActivity() {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -3,10 +3,7 @@ package com.example.myapplication.data;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Database;
-
 import com.example.myapplication.model.Review;
-import com.example.myapplication.model.User;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class ReviewRepository {
     public ReviewRepository(Application application) {
         ReviewRoomDatabase db = ReviewRoomDatabase.getDatabase(application);
         mReviewDao = db.reviewDao();
-        mAllReviews = mReviewDao.getAll();
+        mAllReviews = mReviewDao.getAllReviews();
     }
 
     // ... deletes all the users from db
@@ -31,9 +28,9 @@ public class ReviewRepository {
         return mAllReviews;
     }
 
-    void insert(Review review) {
+    void insertReview(Review review) {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mReviewDao.insert(review);
+            mReviewDao.insertReview(review);
         });
     }
 }

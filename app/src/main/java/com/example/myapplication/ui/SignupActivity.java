@@ -15,7 +15,8 @@ import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.model.User;
 
 public class SignupActivity extends AppCompatActivity {
-    private String username, password, confirmPassword;
+    private String username;
+    private String password;
     private boolean isAdmin;
 
     @Override
@@ -29,10 +30,11 @@ public class SignupActivity extends AppCompatActivity {
 
         Button btnSignup = findViewById(R.id.btnSignUp);
         Button btnBack = findViewById(R.id.btnBackToSignIn);
+        btnBack.setOnClickListener(v -> signInActivity());
 
         username = etUsername.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-        confirmPassword = etConfirmPassword.getText().toString().trim();
+        String confirmPassword = etConfirmPassword.getText().toString().trim();
 
         if (username.isEmpty()) {
             Toast.makeText(SignupActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
@@ -50,7 +52,6 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         btnSignup.setOnClickListener(v -> signupUser());
-        btnBack.setOnClickListener(v -> signInActivity());
     }
 
     private void signupUser() {
@@ -63,7 +64,7 @@ public class SignupActivity extends AppCompatActivity {
         if (user == null) {
             user = new User(username, password, false);
             if (userDao.signUp(user) == -1) {
-                if(isAdmin) {
+                if (isAdmin) {
                     adminActivity();
                 } else {
                     landingActivity();

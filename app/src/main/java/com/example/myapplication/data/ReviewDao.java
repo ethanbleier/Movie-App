@@ -19,13 +19,13 @@ public interface ReviewDao {
     LiveData<List<Review>> getAllReviews();
 
     @Query("SELECT * FROM reviews WHERE movieId LIKE :movieId")
-    Review findReviewByMovieId(int movieId);
+    LiveData<Review> findReviewByMovieId(int movieId);
 
     @Insert()
     void insertReview(Review review);
 
     @Query("SELECT EXISTS (SELECT * FROM reviews WHERE movieId=:movieId)")
-    boolean is_reviewed(int movieId);
+    LiveData<Boolean> is_reviewed(int movieId);
 }
 
 

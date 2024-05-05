@@ -16,10 +16,13 @@ public interface RatingDao {
     @Query("Delete FROM ratings")
     void deleteAllRatings();
 
+    @Query("SELECT * FROM ratings")
+    LiveData<List<Rating>> getAllRatings();
+
     @Query("SELECT * FROM ratings WHERE movieId = :movieId")
-    List<Rating> findRatingsByMovie(int movieId);
+    LiveData<Rating> findRatingsByMovie(int movieId);
 
     @Insert()
-    void insertRate(Rating rating);
+    void insertRating(Rating rating);
 
 }

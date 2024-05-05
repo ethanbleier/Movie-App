@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
-import com.example.myapplication.model.User;
-import com.example.myapplication.model.UserManager;
 
 public class MainActivity extends AppCompatActivity {
     private final UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
@@ -26,25 +24,25 @@ public class MainActivity extends AppCompatActivity {
         Button addMovie = findViewById(R.id.add_button);
         TextView username = findViewById(R.id.tvUsername);
 
-        String currentUserUsername = getLoggedInUsername();
-        if (currentUserUsername != null) {
-            username.setText(currentUserUsername);
-        } else {
-            username.setText("DB ERROR\nNo Username Found");
-        }
+//        String currentUserUsername = getLoggedInUsername();
+//        if (currentUserUsername != null) {
+//            username.setText(currentUserUsername);
+//        } else {
+//            username.setText("DB ERROR\nNo Username Found");
+//        }
 
         // button on click listeners
         back.setOnClickListener(v -> navigateToSignUpActivity());
         addMovie.setOnClickListener(v -> navigateToAddMovieActivity());
     }
 
-    private String getLoggedInUsername() {
-        User loggedInUser = UserManager.getLoggedInUser();
-        if (loggedInUser != null) {
-            return loggedInUser.getUsername();
-        }
-        return "No user found";
-    }
+//    private String getLoggedInUsername() {
+//        User loggedInUser = UserManager.getLoggedInUser();
+//        if (loggedInUser != null) {
+//            return loggedInUser.getUsername();
+//        }
+//        return "No user found";
+//    }
 
     private void navigateToSignUpActivity() {
         Intent intent = new Intent(MainActivity.this, SignupActivity.class);

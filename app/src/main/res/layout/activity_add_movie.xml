@@ -42,7 +42,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/white"
-        android:hint="Enter movie title"
+        android:hint="@string/enter_movie_title"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/white"
-        android:hint="Enter genre"
+        android:hint="@string/enter_genre"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +90,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/white"
-        android:hint="Enter release date"
+        android:hint="@string/enter_release_date"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +108,12 @@
         android:background="@android:color/holo_blue_light"
         android:text="@string/add_movie"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etYear"
-        />
+        app:layout_constraintVertical_bias="0.143" />
 
     <Button
         android:id="@+id/btnBack"
@@ -119,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:text="back"
+        android:text="@string/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

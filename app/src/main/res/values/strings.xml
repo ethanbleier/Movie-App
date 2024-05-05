@@ -19,4 +19,8 @@
     <string name="add_user">Add user</string>
     <string name="admin_box">Admin Box</string>
     <string name="join_movie_watchlist">Join movie watchlist!</string>
+    <string name="enter_movie_title">Enter movie title</string>
+    <string name="enter_genre">Enter genre</string>
+    <string name="enter_release_date">Enter release date</string>
+    <string name="back_to_sign_in_page">Back to Sign In Page</string>
 </resources>

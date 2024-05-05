@@ -28,8 +28,6 @@ public class Movie {
         this.mYear = year;
     }
 
-
-
     public int getmId() {
         return mId;
     }
