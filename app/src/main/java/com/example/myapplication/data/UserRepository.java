@@ -9,38 +9,33 @@ import com.example.myapplication.model.User;
 import java.util.List;
 
 public class UserRepository {
-    private static UserDao mUserDao;
-    private LiveData<List<User>> mAllUsers;
+    private static UserDao userDao = null;
+    private static LiveData<List<User>> users;
 
     public UserRepository(Application application) {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
-        mUserDao = db.userDao();
-        mAllUsers = mUserDao.getAll();
+        userDao = db.userDao();
+        users = userDao.getAll();
     }
 
-
-
-
-
+    public static LiveData<List<User>> getmAllUsers() {
+        return users;
+    }
 
     // ... deletes all the users from db
     public static void deleteAllUsers() {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mUserDao.deleteAllUsers();
+            userDao.deleteAllUsers();
         });
-    }
-
-    LiveData<List<User>> getAllUsers() {
-        return mAllUsers;
     }
 
     void insert(User User) {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mUserDao.signUp(User);
+            userDao.signUp(User);
         });
     }
 
     public static User findByUsernameAndPassword(String username, String password) {
-        return mUserDao.findByUsernameAndPassword(username, password);
+        return userDao.findByUsernameAndPassword(username, password);
     }
 }

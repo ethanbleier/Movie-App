@@ -2,6 +2,7 @@ package com.example.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,11 +20,10 @@ import com.example.myapplication.model.User;
 public class LoginActivity extends AppCompatActivity {
     private UserRoomDatabase db;
     private UserDao userDao;
-    private UserRepository respository;
-    ViewBinding binding;
+    private ActivityLoginBinding binding;
 
-    private EditText etUsername;
-    private EditText etPassword;
+    private String username = "";
+    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +31,56 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        repository = UserRepository.getRepository(getApplication());
+        UserRepository repository = new UserRepository(getApplication());
 
-        db = UserRoomDatabase.getDatabase(getApplicationContext());
-        userDao = db.userDao();
-
-        // Login button
-        Button btnNext = findViewById(R.id.btnNext);
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFieldFromDisplay();
+            }
+        });
 
         // Sign up button
-        Button btnSignUp = findViewById(R.id.btnSignUp);
+        findViewById(R.id.btnSignUp).setOnClickListener(v -> signUpActivity());
+    }
 
-        // button listeners
-        btnNext.setOnClickListener(v -> login());
-        btnSignUp.setOnClickListener(v -> signUpActivity());
+    // here we return true if the username or password inputted is valid.
+    // if the user/pwd is invalid, validate returns false
+    private boolean validate(String text) {
+        if (text == null) {
+            return false;
+        }
+
+        return !text.isEmpty();
+    }
+
+    private void getFieldFromDisplay() {
+        String username = binding.etUsername.getText().toString();
+        String password = binding.etPassword.getText().toString();
+
+        if (validate(username) && validate(password)) {
+            this.username = username;
+            this.password = password;
+
+            login();
+        }
+
+        if (!validate(username)) {
+            binding.etUsername.setError("Invalid username!");
+        }
+
+        if (!validate(password)) {
+            binding.etPassword.setError("Invalid password!");
+        }
     }
 
     private void login() {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-        User user = userDao.login(username, password);
+        User user = UserRepository.findByUsernameAndPassword(this.username, this.password);
 
         if (user != null) {
             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Error in login(): User attempting to add is null", Toast.LENGTH_SHORT).show();
         }
 
         assert user != null;

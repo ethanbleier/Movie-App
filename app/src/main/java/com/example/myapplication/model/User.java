@@ -19,8 +19,8 @@ public class User {
     @ColumnInfo(name = "isAdmin")
     public boolean mIsAdmin;
 
-    public User(@NonNull String username, String password, boolean isAdmin) {
-        this.mIsAdmin = isAdmin;
+    public User(@NonNull String username, String password) {
+        this.mIsAdmin = false;
         this.mUsername = username;
         this.mPassword = password;
     }
@@ -31,14 +31,6 @@ public class User {
 
     public void makeAdmin() {
         this.mIsAdmin = true;
-    }
-
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
     }
 
     public String getUsername() {
