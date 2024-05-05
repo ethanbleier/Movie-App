@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.myapplication.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -16,7 +17,7 @@ public interface MovieDao {
     void deleteAllMovies();
 
     @Query("SELECT * FROM movie")
-    LiveData<List<Movie>> getAll();
+    List<Movie> getAll();
 
     @Query("SELECT * FROM movie WHERE title LIKE :title")
     Movie findByTitle(String title);

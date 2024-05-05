@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast; // oml
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.data.UserDao;
@@ -13,9 +14,7 @@ import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.model.User;
 
 public class LoginActivity extends AppCompatActivity {
-    private UserRoomDatabase db;
-    private UserDao userDao;
-    private ActivityLoginBinding binding;
+    private @NonNull ActivityLoginBinding binding;
 
     private String username = "";
     private String password = "";
@@ -26,22 +25,24 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        UserRepository repository = new UserRepository(getApplication());
-
-        // Next/sign in Button Listener
-        binding.btnNext.setOnClickListener(v -> getFieldFromDisplay());
+        getFieldFromDisplay();
 
         // Go to Sign Up Button Listener
         binding.btnSignUp.setOnClickListener(v -> signUpActivity());
+
+        // Next/sign in Button Listener
+        binding.btnNext.setOnClickListener(v -> login());
     }
 
     // here we return true if the username or password inputted is valid.
     // if the user/pwd is invalid, validate returns false
-    private boolean validate(String text) {
+    private boolean validInput(String text) {
         if (text == null) {
             return false;
         }
 
+        // after confirming text is not null,
+        // we return true if the text is not blank.
         return !text.isEmpty();
     }
 
@@ -50,18 +51,18 @@ public class LoginActivity extends AppCompatActivity {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
 
-        if (validate(username) && validate(password)) {
+        if (validInput(username) && validInput(password)) {
             this.username = username;
             this.password = password;
 
             login();
         }
 
-        if (!validate(username)) {
+        if (!validInput(username)) {
             Toast.makeText(LoginActivity.this, "invalid username", Toast.LENGTH_SHORT).show();
         }
 
-        if (!validate(password)) {
+        if (!validInput(password)) {
             Toast.makeText(LoginActivity.this, "invalid password", Toast.LENGTH_SHORT).show();
 //            binding.etPassword.setError("Invalid password!");
         }
@@ -88,24 +89,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     *  ==== Navigation methods ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====
+     * ==== Navigation methods ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====
      */
 
     private void landingActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private void adminActivity() {
         Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private void signUpActivity() {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
-        finish();
     }
 }

@@ -16,6 +16,7 @@ import com.example.myapplication.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "";
     ActivityMainBinding binding;
 
     private final UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
