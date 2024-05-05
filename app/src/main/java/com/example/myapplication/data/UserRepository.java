@@ -18,12 +18,12 @@ public class UserRepository {
         users = userDao.getAll();
     }
 
-    public static LiveData<List<User>> getmAllUsers() {
+    public LiveData<List<User>> getAllUsers() {
         return users;
     }
 
     // ... deletes all the users from db
-    public static void deleteAllUsers() {
+    public void deleteAllUsers() {
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
             userDao.deleteAllUsers();
         });

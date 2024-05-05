@@ -8,13 +8,13 @@ import java.time.ZonedDateTime;
 
 public class LocalDateTypeConverter {
     @TypeConverter
-    public long convertDateToLong(LocalDateTime date) {
+    public static long convertDateToLong(LocalDateTime date) {
         ZonedDateTime zdt = ZonedDateTime.of(date, ZoneId.systemDefault());
         return zdt.toInstant().toEpochMilli();
     }
 
     @TypeConverter
-    public LocalDateTime convertLongToDate(Long epochMilli) {
+    public static LocalDateTime convertLongToDate(Long epochMilli) {
         Instant instant = Instant.ofEpochMilli(epochMilli);
         return LocalDateTime.ofInstant(instant,ZoneId.systemDefault());
     }

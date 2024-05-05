@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 import com.example.myapplication.typeConverters.LocalDateTypeConverter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class User {
@@ -25,14 +26,16 @@ public class User {
     public boolean IsAdmin;
 
     @ColumnInfo(name = "date")
-    @TypeConverters(LocalDateTypeConverter.class)
-    public LocalDate dateCreated;
+    public long date;
 
-    public User(@NonNull String username, String password) {
-        this.IsAdmin = false;
-        this.dateCreated = LocalDate.now();
+    public User(String username, String password) {
         this.Username = username;
         this.Password = password;
+        this.IsAdmin = false;
+    }
+
+    public User() {
+
     }
 
     public boolean isAdmin() {

@@ -26,7 +26,4 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long signUp(User user);
-
-    @Query("SELECT * FROM user WHERE username=:username AND password=:password")
-    User login(String username, String password);
 }
