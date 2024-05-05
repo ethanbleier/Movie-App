@@ -26,4 +26,10 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long signUp(User user);
+
+    @Query("SELECT username FROM user LIMIT 1")
+    LiveData<String> getLoggedInUsername();
+
+    @Query("SELECT * FROM user WHERE username = (SELECT username FROM user LIMIT 1)")
+    LiveData<User> getLoggedInUser();
 }

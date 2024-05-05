@@ -8,21 +8,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.MovieRepository;
 import com.example.myapplication.data.UserDao;
+import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.databinding.ActivityMainBinding;
+import com.example.myapplication.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "";
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
-    private final UserRoomDatabase db = UserRoomDatabase.getDatabase(getApplicationContext());
-    UserDao userDao = db.userDao();
+    private MovieRepository movieRepository;
+    private UserRepository userRepository;
 
-    int loggedInUserId = -1;
+    public static final String TAG = "DAC_MOVIE-APP";
+
+    // movie model params
+    String title = "", director = "", genre = "", year = "";
+
+    // user username for tvUsername
+    private LiveData<String> signedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,43 +39,37 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button back = findViewById(R.id.back);
-        Button addMovie = findViewById(R.id.add_button);
+        movieRepository = new MovieRepository(getApplication());
+        userRepository = new UserRepository(getApplication());
+
+        Button btnBack = findViewById(R.id.back);
+        Button btnAddMovie = findViewById(R.id.add_button);
+        Button btnEditUser = findViewById(R.id.username);
 
         binding.addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "add movie info next!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "add movie info next!", Toast.LENGTH_SHORT).show();
+                navigateToAddMovieActivity();
             }
         });
 
-//        loginUser();
+        signedInUsername = (LiveData<String>) userRepository.getUsername();
 
+        signedInUsername.observe(this, signedInUsername -> {
+            // idk why the button text must be a char seq
+            if (signedInUsername != null) {
+                binding.username.setText((CharSequence) userRepository.getUsername());
+            }
+        });
 
-//        String currentUserUsername = getLoggedInUsername();
-//        if (currentUserUsername != null) {
-//            username.setText(currentUserUsername);
-//        } else {
-//            username.setText("DB ERROR\nNo Username Found");
-//        }
+        binding.username.setOnClickListener(v -> navigateToEditUserActivity());
 
         // button on click listeners
-        back.setOnClickListener(v -> navigateToSignUpActivity());
-        addMovie.setOnClickListener(v -> navigateToAddMovieActivity());
+        btnBack.setOnClickListener(v -> navigateToSignUpActivity());
+        btnAddMovie.setOnClickListener(v -> navigateToAddMovieActivity());
     }
-
-//    private String getLoggedInUsername() {
-//        User loggedInUser = UserManager.getLoggedInUser();
-//        if (loggedInUser != null) {
-//            return loggedInUser.getUsername();
-//        }
-//        return "No user found";
-//    }
-//
-//    private void loginUser() {
-//        userDao.signUp();
-//    }
 
     private void navigateToSignUpActivity() {
         Intent intent = new Intent(MainActivity.this, SignupActivity.class);
@@ -75,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToAddMovieActivity() {
         Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);
+        startActivity(intent);
+    }
+
+    private void navigateToEditUserActivity() {
+        Intent intent = new Intent(MainActivity.this, EditUserActivity.class);
         startActivity(intent);
     }
 }

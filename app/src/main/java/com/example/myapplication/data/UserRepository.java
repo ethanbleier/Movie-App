@@ -18,6 +18,10 @@ public class UserRepository {
         users = userDao.getAll();
     }
 
+    public LiveData<User> getLoggedInUser() {
+        return userDao.getLoggedInUser();
+    }
+
     public LiveData<List<User>> getAllUsers() {
         return users;
     }
@@ -37,5 +41,9 @@ public class UserRepository {
 
     public static User findByUsernameAndPassword(String username, String password) {
         return userDao.findByUsernameAndPassword(username, password);
+    }
+
+    public LiveData<String> getUsername() {
+        return userDao.getLoggedInUsername();
     }
 }
