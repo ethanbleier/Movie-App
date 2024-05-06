@@ -6,7 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.myapplication.model.*;
+import com.example.myapplication.data.model.Movie;
+import com.example.myapplication.data.model.Review;
+import com.example.myapplication.data.model.User;
+import com.example.myapplication.data.model.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

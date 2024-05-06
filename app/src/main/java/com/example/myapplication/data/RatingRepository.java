@@ -3,10 +3,8 @@ package com.example.myapplication.data;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Database;
 
-import com.example.myapplication.model.Rating;
-import com.example.myapplication.model.Review;
+import com.example.myapplication.data.model.Rating;
 
 import java.util.List;
 public class RatingRepository {

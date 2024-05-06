@@ -2,20 +2,17 @@ package com.example.myapplication.data;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.example.myapplication.model.Movie;
-import com.example.myapplication.model.Rating;
-import com.example.myapplication.model.Review;
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.Movie;
+import com.example.myapplication.data.model.Rating;
+import com.example.myapplication.data.model.Review;
+import com.example.myapplication.data.model.User;
 import com.example.myapplication.typeConverters.LocalDateTypeConverter;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
-import com.example.myapplication.model.Movie;
+import com.example.myapplication.data.model.Movie;
 
 
 public class AddMovieActivity extends AppCompatActivity {

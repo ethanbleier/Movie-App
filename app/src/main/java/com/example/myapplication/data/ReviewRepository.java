@@ -3,7 +3,7 @@ package com.example.myapplication.data;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import com.example.myapplication.model.Review;
+import com.example.myapplication.data.model.Review;
 
 import java.util.List;
 

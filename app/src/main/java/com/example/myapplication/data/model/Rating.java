@@ -1,11 +1,11 @@
-package com.example.myapplication.model;
+package com.example.myapplication.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "reviews")
-public class Review {
+@Entity(tableName = "ratings")
+public class Rating {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -15,13 +15,11 @@ public class Review {
     @ColumnInfo(name = "movieId")
     private int movieId;
 
-    @ColumnInfo(name = "content")
-    private String content;
+    @ColumnInfo(name = "rating")
+    private float rating;
 
-    public Review(int userId, int movieId, String content) {
-        this.userId = userId;
-        this.movieId = movieId;
-        this.content = content;
+    public Rating(float rating) {
+        this.rating = rating;
     }
 
     public int getId() {
@@ -48,11 +46,12 @@ public class Review {
         this.movieId = movieId;
     }
 
-    public String getContent() {
-        return content;
+    public float getRating() {
+        return rating;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }
+

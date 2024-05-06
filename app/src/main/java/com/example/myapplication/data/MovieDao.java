@@ -1,14 +1,12 @@
 package com.example.myapplication.data;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.myapplication.model.Movie;
+import com.example.myapplication.data.model.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

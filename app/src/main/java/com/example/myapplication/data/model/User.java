@@ -1,58 +1,57 @@
-package com.example.myapplication.model;
+package com.example.myapplication.data.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.example.myapplication.typeConverters.LocalDateTypeConverter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 public class User {
+
     @PrimaryKey(autoGenerate = true)
-    public int Id;
+    public int id;
 
     @ColumnInfo(name = "username")
-    public String Username;
+    public String username;
 
     @ColumnInfo(name = "password")
-    public String Password;
+    public String password;
 
     @ColumnInfo(name = "isAdmin")
-    public boolean IsAdmin;
+    public boolean isAdmin;
 
     @ColumnInfo(name = "date")
     public long date;
 
     public User(String username, String password) {
-        this.Username = username;
-        this.Password = password;
-        this.IsAdmin = false;
+        this.username = username;
+        this.password = password;
     }
 
-    public User() {
+    public User(){}
 
+    public int getId() {
+        return id;
     }
 
     public boolean isAdmin() {
-        return IsAdmin;
+        return isAdmin;
     }
 
     // ideally the object would have a "final Boolean IsAdmin"
     // and this method would create a new object but this is fine for now
     public void makeAdmin() {
-        this.IsAdmin = true;
+        this.isAdmin = true;
     }
 
     public void demote() {
-        this.IsAdmin = false;
+        this.isAdmin = false;
     }
 
     public String getUsername() {
-        return this.Username;
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }

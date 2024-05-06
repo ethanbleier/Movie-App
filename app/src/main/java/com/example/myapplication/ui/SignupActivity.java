@@ -2,22 +2,18 @@ package com.example.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
-import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.databinding.ActivitySignupBinding;
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.User;
 
 public class SignupActivity extends AppCompatActivity {
-    private String username = "", password = "", confirmedPassword = "";
+    private String username = "";
     private @NonNull ActivitySignupBinding binding;
 
     @Override
@@ -26,9 +22,7 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getFieldFromDisplay();
-
-        binding.btnSignUp.setOnClickListener(v -> signupUser(this.username, this.password, this.confirmedPassword));
+        binding.btnSignUp.setOnClickListener(v -> getFieldFromDisplay());
         // Back to sign up page navigation
         binding.btnBackToSignIn.setOnClickListener(v -> signInActivity());
     }
@@ -53,8 +47,8 @@ public class SignupActivity extends AppCompatActivity {
 
         if (validInput(username) && validInput(password) & validInput(confirmedPassword)) {
             this.username = username;
-            this.password = password;
-            this.confirmedPassword = confirmedPassword;
+
+            signupUser(this.username, password, confirmedPassword);
         }
 
         if (!validInput(username)) {

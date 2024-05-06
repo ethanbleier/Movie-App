@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.User;
 
 import java.util.List;
 
@@ -32,4 +32,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE username = (SELECT username FROM user LIMIT 1)")
     LiveData<User> getLoggedInUser();
+
+    @Query("DELETE FROM user")
+    void deleteUser();
 }

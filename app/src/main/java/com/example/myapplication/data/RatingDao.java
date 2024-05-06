@@ -6,7 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.myapplication.model.Rating;
+import com.example.myapplication.data.model.Rating;
 
 import java.util.List;
 

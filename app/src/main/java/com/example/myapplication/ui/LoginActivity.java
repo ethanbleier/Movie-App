@@ -1,20 +1,19 @@
 package com.example.myapplication.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast; // oml
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRepository;
-import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.databinding.ActivityLoginBinding;
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.User;
 
 public class LoginActivity extends AppCompatActivity {
-    private @NonNull ActivityLoginBinding binding;
+    private ActivityLoginBinding binding;
+
+    private static final String LOGIN_ACTIVITY_USER_ID = "LOGIN_ACTIVITY_USER_ID";
 
     private String username = "";
     private String password = "";
@@ -31,7 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(v -> signUpActivity());
 
         // Next/sign in Button Listener
-        binding.btnNext.setOnClickListener(v -> login());
+        binding.btnNext.setOnClickListener(v -> getFieldFromDisplay());
+    }
+
+    static Intent loginActivityIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(String.valueOf(LOGIN_ACTIVITY_USER_ID), userId);
+        return intent;
     }
 
     // here we return true if the username or password inputted is valid.
@@ -50,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
     private void getFieldFromDisplay() {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            return;
+        }
 
         if (validInput(username) && validInput(password)) {
             this.username = username;

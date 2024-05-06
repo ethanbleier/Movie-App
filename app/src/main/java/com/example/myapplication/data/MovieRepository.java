@@ -2,12 +2,10 @@ package com.example.myapplication.data;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import com.example.myapplication.model.Movie;
+import com.example.myapplication.data.model.Movie;
 import com.example.myapplication.ui.MainActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

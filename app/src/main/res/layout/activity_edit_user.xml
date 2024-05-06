@@ -72,40 +72,56 @@
         android:hint="Edit password"
         android:inputType="textPassword"
         android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etUsername"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnUpdate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="32dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="Update"
-        android:textColor="@android:color/white"
+        android:background="@android:color/system_background_light"
+        android:text="update account info above"
+        android:textColor="@color/accent_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etPassword"
-        />
+        app:layout_constraintVertical_bias="0.002" />
+
+    <Button
+        android:id="@+id/btnSignOut"
+        android:layout_width="347dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/background_light"
+        android:text="Sign out"
+        android:textColor="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpdate"
+        app:layout_constraintVertical_bias="0.052" />
 
     <Button
         android:id="@+id/btnDeleteUser"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:background="@android:color/holo_red_light"
-        android:text="Delete user"
-        android:textColor="@android:color/white"
+        android:layout_width="345dp"
+        android:layout_height="54dp"
+        android:background="@android:color/background_light"
+        android:text="Delete account"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUpdate"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignOut" />
 
     <Button
         android:id="@+id/btnBack"
