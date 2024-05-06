@@ -14,7 +14,7 @@ import com.example.myapplication.data.model.User;
 
 public class SignupActivity extends AppCompatActivity {
     private String username = "";
-    private @NonNull ActivitySignupBinding binding;
+    private ActivitySignupBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
