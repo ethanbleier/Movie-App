@@ -5,17 +5,19 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.Movie;
+import com.example.myapplication.data.model.Rating;
+import com.example.myapplication.data.model.Review;
+import com.example.myapplication.data.model.User;
+import com.example.myapplication.typeConverters.LocalDateTypeConverter;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@TypeConverters(LocalDateTime.class)
-@Database(entities = {User.class}, version = 2, exportSchema = false)
+@TypeConverters(LocalDateTypeConverter.class)
+@Database(entities = {User.class, Movie.class, Rating.class, Review.class}, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
@@ -28,9 +30,11 @@ public abstract class UserRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (UserRoomDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    UserRoomDatabase.class, "user_database")
-                            .build();
+                    INSTANCE = Room.databaseBuilder(
+                        context.getApplicationContext(),
+                        UserRoomDatabase.class, "user_database")
+                        .fallbackToDestructiveMigration()
+                        .build();
                 }
             }
         }

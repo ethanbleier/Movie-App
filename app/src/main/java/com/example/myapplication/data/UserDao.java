@@ -3,15 +3,15 @@ package com.example.myapplication.data;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.User;
 
 import java.util.List;
 
 @Dao
 public interface UserDao {
-
     @Query("DELETE FROM user")
     void deleteAllUsers();
 
@@ -21,18 +21,18 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE username LIKE :username")
     User findByUsername(String username);
 
-    @Query("SELECT * FROM user WHERE password LIKE :password")
-    User findByPassword(String password);
-
     @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
     User findByUsernameAndPassword(String username, String password);
 
-    @Insert()
-    void insert(User user);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long signUp(User user);
 
-    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username)")
-    boolean is_taken(String username);
+    @Query("SELECT username FROM user LIMIT 1")
+    LiveData<String> getLoggedInUsername();
 
-    @Query("SELECT EXISTS (SELECT * FROM user WHERE username=:username AND password=:password)")
-    boolean login(String username, String password);
+    @Query("SELECT * FROM user WHERE username = (SELECT username FROM user LIMIT 1)")
+    LiveData<User> getLoggedInUser();
+
+    @Query("DELETE FROM user")
+    void deleteUser();
 }

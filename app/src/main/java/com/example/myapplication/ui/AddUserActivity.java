@@ -3,25 +3,24 @@ package com.example.myapplication.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRoomDatabase;
-import com.example.myapplication.model.User;
+import com.example.myapplication.data.model.User;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddUserActivity extends AppCompatActivity {
     private UserDao userDao;
     private EditText etUsername, etPassword;
-    private Checkable etIsAdmin;
+
+    // No idea what this is but it seems nice
+    AtomicBoolean isAdmin = new AtomicBoolean(false);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +34,15 @@ public class AddUserActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         Button btnAddNewUser = findViewById(R.id.btnAddNewUser);
         Button btnBack = findViewById(R.id.btnBack);
-        etIsAdmin = findViewById(R.id.etIsAdmin);
-
+        Button btnHiddenAdmin = findViewById(R.id.btnHidden);
         btnBack.setOnClickListener(v -> navigateToAdminMainActivity());
         btnAddNewUser.setOnClickListener(v -> signupUser());
+        btnHiddenAdmin.setOnClickListener(v -> isAdmin.set(true));
     }
 
     private void signupUser() {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        boolean isAdmin = Boolean.parseBoolean(etIsAdmin.toString().trim());
 
         // input validation
         if (username.isEmpty() || password.isEmpty()) {
@@ -53,10 +51,9 @@ public class AddUserActivity extends AppCompatActivity {
         }
 
         // Create new user and add to db
-        User user = new User(username, password, isAdmin);
+        User user = new User(username, password);
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            userDao.insert(user);
-
+            userDao.signUp(user);
         });
     }
 

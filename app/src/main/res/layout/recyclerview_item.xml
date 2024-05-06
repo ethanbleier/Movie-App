@@ -9,6 +9,6 @@
         android:id="@+id/textView"
         style="@style/AppTheme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="630dp"
         android:background="@android:color/holo_orange_light" />
 </LinearLayout>

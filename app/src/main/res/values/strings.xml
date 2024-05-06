@@ -8,4 +8,21 @@
     <string name="sign_up">Sign up</string>
     <string name="password">Password</string>
     <string name="enter_a_password">Enter a password</string>
+    <string name="enter_director">Enter director</string>
+    <string name="back">back</string>
+    <string name="admin">Admin</string>
+    <string name="watch_list">Watch list</string>
+    <string name="sign_out">sign out</string>
+    <string name="add_new_user">Add new user</string>
+    <string name="movie_title_here">Movie title here</string>
+    <string name="join_watchlist">Join Watchlist!</string>
+    <string name="add_user">Add user</string>
+    <string name="admin_box">Admin Box</string>
+    <string name="join_movie_watchlist">Join movie watchlist!</string>
+    <string name="enter_movie_title">Enter movie title</string>
+    <string name="enter_genre">Enter genre</string>
+    <string name="enter_release_date">Enter release date</string>
+    <string name="back_to_sign_in_page">Back to Sign In Page</string>
+    <string name="preference_file_key">daclinkPreferenceFileNameMovieList</string>
+    <string name="preference_user_id_key">preference_user_id_key_movielist</string>
 </resources>

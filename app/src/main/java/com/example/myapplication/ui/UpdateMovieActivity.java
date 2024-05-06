@@ -7,14 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
-import com.example.myapplication.model.Movie;
+import com.example.myapplication.data.model.Movie;
 
 public class UpdateMovieActivity extends AppCompatActivity {
     private EditText etTitle, etDirector, etGenre, etYear;

@@ -1,4 +1,4 @@
-package com.example.myapplication.model;
+package com.example.myapplication.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -27,8 +27,6 @@ public class Movie {
         this.mGenre = genre;
         this.mYear = year;
     }
-
-
 
     public int getmId() {
         return mId;

@@ -25,8 +25,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnAddNewUser.setOnClickListener(v -> navigateToAddUserActivity());
 
         btnSignOut.setOnClickListener(v -> {
-            //TODO: Sign out user
-
+            // I don't think sign out is necessary, but we'll see. Hopefully it is not.
             navigateToLoginActivity();
         });
 
