@@ -1,12 +1,13 @@
-# Movie Watchlist
+# Project 2: Movie Watchlist 
+## Team: 
 
-The movie watch list application allows users to log movies they have watched. Users can detail movies by the director, genre, watch-status and their personal rating of the movie. Our app allows users to add, view, edit and delete movies from various lists. 
+- Ethan Bleier
+- Shea Gallagher 
 
-Admin privileges grant access to the full user database with all permissions enabled. 
+---
 
-Ethan Bleier
-Shea Gallagher
-Project 02: CRUD App Android
 CST 338 SP24 Section 02
 
 https://drive.google.com/drive/folders/1uQxzQS1ZWix5gmjUIgns0QvHRBr_fl5U?usp=drive_link
+
+---
