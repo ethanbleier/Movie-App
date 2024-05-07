@@ -55,13 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         return !text.isEmpty();
     }
 
-//    private void verifyUser(String username, String password) {
-//        if(username.isEmpty()) {
-//            return;
-//        }
-//
-//        LiveData<User> userObserver =
-//    }
 
     // Method to read data from the text fields
     private void getFieldFromDisplay() {
@@ -95,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     // Primary Login Method
     private void login() {
         Log.d("SG", "INSIDE LOGIN()" + username + " " + password);
-        if(UserRepository.findByUsernameAndPassword(this.username, this.password)==null) {
+        if(UserRepository.findByUsernameAndPassword(this.username, this.password)==null) {  //This method causes crash
             Log.d("SG", "   INSIDE IF");
             return;
         }

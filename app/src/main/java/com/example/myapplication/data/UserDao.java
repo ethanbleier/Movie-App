@@ -20,8 +20,13 @@ public interface UserDao {
     LiveData<List<User>> getAll();
 
     @Query("SELECT * FROM user WHERE username LIKE :username")
+    @Nullable
     User findByUsername(String username);
 
+
+    //This query seems to be causing nullpointerexceptions
+    // @nullable may be helping by allowing the query to return a null obj without raising the
+    // exception. Then the problem becomes the program trying to run on the main thread
     @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
     @Nullable
     User findByUsernameAndPassword(String username, String password);

@@ -52,4 +52,5 @@ public class UserRepository {
     public LiveData<String> getUsername() {
         return userDao.getLoggedInUsername();
     }
+
 }

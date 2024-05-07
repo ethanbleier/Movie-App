@@ -78,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.d("SG", "   IM BETTING PROG CRASHES ON NEXT LINE");
         User user = userDao.findByUsername(username);
         Log.d("SG", "   I LOST THE BET");
-        Log.d("SG", user.toString());
+
         // haha good luck reading this
         // first we check that the sign up was successful, ie the insert returned a non-null user class
         if (user == null) {     //replace with isInDatabase() boolean
