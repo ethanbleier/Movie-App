@@ -3,8 +3,10 @@ package com.example.myapplication.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast; // oml
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.databinding.ActivityLoginBinding;
@@ -23,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Log.d("SG", "INSIDE ONCREATE()");
 
         getFieldFromDisplay();
 
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     // here we return true if the username or password inputted is valid.
     // if the user/pwd is invalid, validate returns false
     private boolean validInput(String text) {
+        Log.d("SG", "INSIDE VALIDINPUT()");
         if (text == null) {
             return false;
         }
@@ -51,10 +55,21 @@ public class LoginActivity extends AppCompatActivity {
         return !text.isEmpty();
     }
 
+//    private void verifyUser(String username, String password) {
+//        if(username.isEmpty()) {
+//            return;
+//        }
+//
+//        LiveData<User> userObserver =
+//    }
+
     // Method to read data from the text fields
     private void getFieldFromDisplay() {
+        Log.d("SG", "INSIDE GETFIELDFROMDISPLAY()");
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
+
+//        verifyUser(username, password);
 
         if (username.isEmpty() || password.isEmpty()) {
             return;
@@ -63,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         if (validInput(username) && validInput(password)) {
             this.username = username;
             this.password = password;
-
+            Log.d("SG", username + " " + password);
             login();
         }
 
@@ -79,7 +94,13 @@ public class LoginActivity extends AppCompatActivity {
 
     // Primary Login Method
     private void login() {
+        Log.d("SG", "INSIDE LOGIN()" + username + " " + password);
+        if(UserRepository.findByUsernameAndPassword(this.username, this.password)==null) {
+            Log.d("SG", "   INSIDE IF");
+            return;
+        }
         User user = UserRepository.findByUsernameAndPassword(this.username, this.password);
+        Log.d("SG", "   1");
 
         if (user != null) {
             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();

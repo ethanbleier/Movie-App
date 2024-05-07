@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -22,6 +23,7 @@ public interface UserDao {
     User findByUsername(String username);
 
     @Query("SELECT * FROM user WHERE username LIKE :username AND password LIKE :password")
+    @Nullable
     User findByUsernameAndPassword(String username, String password);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -2,6 +2,7 @@ package com.example.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        Log.d("SG", "INSIDE ONCREATE()");
         binding.btnSignUp.setOnClickListener(v -> getFieldFromDisplay());
         // Back to sign up page navigation
         binding.btnBackToSignIn.setOnClickListener(v -> signInActivity());
@@ -30,6 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     // here we return true if the username or password inputted is valid.
     // if the user/pwd is invalid, validate returns false
     private boolean validInput(String text) {
+        Log.d("SG", "INSIDE VALIDINPUT()");
         if (text == null) {
             return false;
         }
@@ -44,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
         String confirmedPassword = binding.etcPassword.getText().toString();
+
+        Log.d("SG", "INSIDE GETFIELDFROMDISPLAY() " + username + " " + password);
 
         if (validInput(username) && validInput(password) & validInput(confirmedPassword)) {
             this.username = username;
@@ -70,12 +74,17 @@ public class SignupActivity extends AppCompatActivity {
         UserDao userDao = db.userDao();
 
         // we need to check if the username already exists in the db.
+        Log.d("SG", "INSIDE SIGNUPUSER()");
+        Log.d("SG", "   IM BETTING PROG CRASHES ON NEXT LINE");
         User user = userDao.findByUsername(username);
-
+        Log.d("SG", "   I LOST THE BET");
+        Log.d("SG", user.toString());
         // haha good luck reading this
         // first we check that the sign up was successful, ie the insert returned a non-null user class
-        if (user == null) {
+        if (user == null) {     //replace with isInDatabase() boolean
+            Log.d("SG", "   INSIDE IF USER == NULL");
             user = new User(username, password);
+            Log.d("SG", "   NEWUSER: " + user.toString());
             if (userDao.signUp(user) != -1) {
                 // need to figure out admin logic.
                 Toast.makeText(SignupActivity.this, "Welcome " + username + ". ", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.example.myapplication.data;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -40,6 +41,11 @@ public class UserRepository {
     }
 
     public static User findByUsernameAndPassword(String username, String password) {
+        Log.d("SG", "INSIDE USERREPO.JAVA IN FBUAP()"); //reached
+        //adjust this next line
+        if(userDao.findByUsernameAndPassword(username, password) == null){
+            Log.d("SG", "INSIDE USERREPO.JAVA IN FBUAP() IN IF ==NULL");
+        }
         return userDao.findByUsernameAndPassword(username, password);
     }
 
