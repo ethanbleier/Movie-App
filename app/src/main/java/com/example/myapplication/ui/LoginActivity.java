@@ -7,11 +7,13 @@ import android.widget.Toast; // oml
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.data.UserRepository;
+import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.data.model.User;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
+    private UserRepository repository;
 
     private static final String LOGIN_ACTIVITY_USER_ID = "LOGIN_ACTIVITY_USER_ID";
 
@@ -24,13 +26,14 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getFieldFromDisplay();
+        repository = new UserRepository(getApplication());
+
 
         // Go to Sign Up Button Listener
         binding.btnSignUp.setOnClickListener(v -> signUpActivity());
 
         // Next/sign in Button Listener
-        binding.btnNext.setOnClickListener(v -> getFieldFromDisplay());
+        binding.btnNext.setOnClickListener(v -> getFieldFromDisplayAndLogin());
     }
 
     static Intent loginActivityIntentFactory(Context context, int userId) {
@@ -52,49 +55,54 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Method to read data from the text fields
-    private void getFieldFromDisplay() {
+    private void getFieldFromDisplayAndLogin() {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            return;
-        }
 
         if (validInput(username) && validInput(password)) {
             this.username = username;
             this.password = password;
-
             login();
-        }
-
-        if (!validInput(username)) {
-            Toast.makeText(LoginActivity.this, "invalid username", Toast.LENGTH_SHORT).show();
-        }
-
-        if (!validInput(password)) {
-            Toast.makeText(LoginActivity.this, "invalid password", Toast.LENGTH_SHORT).show();
-//            binding.etPassword.setError("Invalid password!");
+        } else {
+            if (!validInput(username)) {
+                Toast.makeText(LoginActivity.this, "invalid username", Toast.LENGTH_SHORT).show();
+            }
+            if (!validInput(password)) {
+                Toast.makeText(LoginActivity.this, "invalid password", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     // Primary Login Method
     private void login() {
-        User user = UserRepository.findByUsernameAndPassword(this.username, this.password);
+        String username = binding.etUsername.getText().toString();
+        String password = binding.etPassword.getText().toString();
 
-        if (user != null) {
-            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(LoginActivity.this, "Error in login(): User attempting to add is null", Toast.LENGTH_SHORT).show();
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        assert user != null;
-        if (user.isAdmin()) {
-            Toast.makeText(LoginActivity.this, "Welcome, admin", Toast.LENGTH_SHORT).show();
-            adminActivity();
-        } else {
-            Toast.makeText(LoginActivity.this, "Welcome, " + username + ". ", Toast.LENGTH_SHORT).show();
-            landingActivity();
-        }
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            User user = repository.findByUsernameAndPassword(username, password);
+
+            if (user != null) {
+                // Login successful
+                runOnUiThread(() -> {
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    if (user.isAdmin()) {
+                        adminActivity();
+                    } else {
+                        landingActivity();
+                    }
+                });
+            } else {
+                // Login failed
+                runOnUiThread(() -> {
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
     /**

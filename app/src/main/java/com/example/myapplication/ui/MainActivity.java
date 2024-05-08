@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 import com.example.myapplication.R;
 import com.example.myapplication.data.MovieRepository;
 import com.example.myapplication.data.UserRepository;
+import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.data.model.User;
 
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOGGED_OUT = -1;
     private ActivityMainBinding binding;
 
-    private MovieRepository movieRepository;
     private UserRepository userRepository;
 
     public static final String TAG = "DAC_MOVIE-APP";
@@ -45,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        movieRepository = new MovieRepository(getApplication());
         userRepository = new UserRepository(getApplication());
 
         loginUser();
-
-        Button btnAddMovie = findViewById(R.id.add_button);
 
         binding.addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -61,34 +58,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        menuOptions.setOnClickListener(v - > m)
-        btnAddMovie.setOnClickListener(v -> navigateToAddMovieActivity());
+        findViewById(R.id.add_button).setOnClickListener(v -> navigateToAddMovieActivity());
     }
 
     private void loginUser() {
-        LiveData<User> userObserver = userRepository.getLoggedInUser();
-        userObserver.observe(this, user -> {
-            this.user = user;
-            if (this.user != null) {
-                invalidateOptionsMenu();
-            } else {
-
-            }
-
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            LiveData<User> userObserver = userRepository.getLoggedInUser();
+            runOnUiThread(() -> {
+                userObserver.observe(this, user -> {
+                    this.user = user;
+                    if (this.user != null) {
+                        invalidateOptionsMenu();
+                    } else {
+                        // No user logged in
+                    }
+                });
+            });
         });
-
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.usernameMenuItem);
-        item.setVisible(true);
-        if (user != null) {
-            item.setTitle(user.getUsername() != null ? user.getUsername() : "");
-            item.setVisible(true);
-        } else {
-            item.setVisible(false);
-        }
-        return true;
     }
 
     private void updateSharedPreferences() {

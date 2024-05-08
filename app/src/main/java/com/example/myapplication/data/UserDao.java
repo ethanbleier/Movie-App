@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.myapplication.data.model.User;
+import com.example.myapplication.data.UserRoomDatabase;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface UserDao {
     User findByUsernameAndPassword(String username, String password);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long signUp(User user);
+    long insert(User user);
 
     @Query("SELECT username FROM user LIMIT 1")
     LiveData<String> getLoggedInUsername();

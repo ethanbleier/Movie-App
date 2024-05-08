@@ -7,64 +7,64 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Movie {
     @PrimaryKey(autoGenerate = true)
-    public int mId;
+    public int id;
 
     @ColumnInfo(name = "title")
-    public String mTitle;
+    public String title;
 
     @ColumnInfo(name = "director")
-    public String mDirector;
+    public String director;
 
     @ColumnInfo(name = "genre")
-    public String mGenre;
+    public String genre;
 
     @ColumnInfo(name = "year")
-    public String mYear;
+    public String year;
 
     public Movie(String title, String director, String genre, String year) {
-        this.mTitle = title;
-        this.mDirector = director;
-        this.mGenre = genre;
-        this.mYear = year;
+        this.title = title;
+        this.director = director;
+        this.genre = genre;
+        this.year = year;
     }
 
     public int getmId() {
-        return mId;
+        return id;
     }
 
     public void setmId(int mId) {
-        this.mId = mId;
+        this.id = mId;
     }
 
     public String getmTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getmDirector() {
-        return mDirector;
+        return director;
     }
 
     public String getmGenre() {
-        return mGenre;
+        return genre;
     }
 
     public String getmYear() {
-        return mYear;
+        return year;
     }
 
     public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
+        this.title = mTitle;
     }
 
     public void setmDirector(String mDirector) {
-        this.mDirector = mDirector;
+        this.director = mDirector;
     }
 
     public void setmGenre(String mGenre) {
-        this.mGenre = mGenre;
+        this.genre = mGenre;
     }
 
     public void setmYear(String mYear) {
-        this.mYear = mYear;
+        this.year = mYear;
     }
 }
