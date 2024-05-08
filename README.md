@@ -1,5 +1,5 @@
 # CST 338 - Software Design
-## Project 2: Movie Watchlist: 
+## Project 2: Movie Watchlist
 ### Team:
 
 - Ethan Bleier
