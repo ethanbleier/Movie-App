@@ -1,7 +1,12 @@
 package com.example.myapplication.data;
 
+import static com.example.myapplication.data.UserRoomDatabase.databaseWriteExecutor;
+
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -29,24 +34,25 @@ public class UserRepository {
 
     // ... deletes all the users from db
     public void deleteAllUsers() {
-        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+        databaseWriteExecutor.execute(() -> {
             userDao.deleteAllUsers();
         });
     }
 
     void insert(User User) {
-        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+        databaseWriteExecutor.execute(() -> {
             userDao.signUp(User);
         });
     }
 
     public static User findByUsernameAndPassword(String username, String password) {
         Log.d("SG", "INSIDE USERREPO.JAVA IN FBUAP()"); //reached
-        //adjust this next line
+
         if(userDao.findByUsernameAndPassword(username, password) == null){
             Log.d("SG", "INSIDE USERREPO.JAVA IN FBUAP() IN IF ==NULL");
         }
         return userDao.findByUsernameAndPassword(username, password);
+
     }
 
     public LiveData<String> getUsername() {

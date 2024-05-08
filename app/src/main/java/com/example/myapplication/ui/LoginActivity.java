@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Log.d("SG", "INSIDE ONCREATE()");
 
-        getFieldFromDisplay();
+//        getFieldFromDisplay();
 
         // Go to Sign Up Button Listener
         binding.btnSignUp.setOnClickListener(v -> signUpActivity());
@@ -88,12 +88,23 @@ public class LoginActivity extends AppCompatActivity {
     // Primary Login Method
     private void login() {
         Log.d("SG", "INSIDE LOGIN()" + username + " " + password);
-        if(UserRepository.findByUsernameAndPassword(this.username, this.password)==null) {  //This method causes crash
-            Log.d("SG", "   INSIDE IF");
-            return;
+        try{
+            if(UserRepository.findByUsernameAndPassword(this.username, this.password)==null) {  //This method causes crash
+                Log.d("SG", "   INSIDE IF");
+                return;
+            }
         }
-        User user = UserRepository.findByUsernameAndPassword(this.username, this.password);
-        Log.d("SG", "   1");
+        catch(Exception e) {
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+        User user = null;
+        try{
+            user = UserRepository.findByUsernameAndPassword(this.username, this.password);
+        }
+        catch(Exception e) {
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
 
         if (user != null) {
             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
