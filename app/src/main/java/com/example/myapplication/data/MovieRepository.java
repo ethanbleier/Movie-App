@@ -16,7 +16,6 @@ public class MovieRepository {
     public MovieRepository(Application application) {
         MovieRoomDatabase db = MovieRoomDatabase.getDatabase(application);
         movieDao = db.movieDao();
-        movies = movieDao.getAllMovies();
     }
 
     public void deleteAllMovies() {

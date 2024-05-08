@@ -15,10 +15,10 @@ public class MovieTest {
 
         Movie movie = new Movie(title, director, genre, year);
 
-        Assert.assertEquals(title, movie.getmTitle());
-        Assert.assertEquals(director, movie.getmDirector());
-        Assert.assertEquals(genre, movie.getmGenre());
-        Assert.assertEquals(year, movie.getmYear());
+        Assert.assertEquals(title, movie.getTitle());
+        Assert.assertEquals(director, movie.getDirector());
+        Assert.assertEquals(genre, movie.getGenre());
+        Assert.assertEquals(year, movie.getYear());
     }
 
     @Test
@@ -30,14 +30,14 @@ public class MovieTest {
         String genre = "Sci-fi";
         String year = "1977";
 
-        movie.setmTitle(title);
-        movie.setmDirector(director);
-        movie.setmGenre(genre);
-        movie.setmYear(year);
+        movie.setTitle(title);
+        movie.setDirector(director);
+        movie.setGenre(genre);
+        movie.setYear(year);
 
-        Assert.assertEquals(title, movie.getmTitle());
-        Assert.assertEquals(director, movie.getmDirector());
-        Assert.assertEquals(genre, movie.getmGenre());
-        Assert.assertEquals(year, movie.getmYear());
+        Assert.assertEquals(title, movie.getTitle());
+        Assert.assertEquals(director, movie.getDirector());
+        Assert.assertEquals(genre, movie.getGenre());
+        Assert.assertEquals(year, movie.getYear());
     }
 }
