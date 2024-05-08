@@ -24,7 +24,7 @@ public class UserTest {
 
         Assert.assertFalse(user.isAdmin());
 
-        user.makeAdmin();
+        user.promote();
         Assert.assertTrue(user.isAdmin());
 
         user.demote();

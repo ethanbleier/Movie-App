@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.data.MovieRepository;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewMovies;
     MovieAdapter movieAdapter;
-    private List<Movie> movieList = new ArrayList<>();
+    private final List<Movie> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         int loggedInUserId = intent.getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
 
         // Movie recycler initialization
-        this.recyclerViewMovies = findViewById(R.id.recyclerview);
+        this.recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
+        this.recyclerViewMovies.setLayoutManager(new LinearLayoutManager(this));
         this.movieAdapter = new MovieAdapter(movieList);
         this.recyclerViewMovies.setAdapter(movieAdapter);
 
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             this.movieList = movieList;
         }
 
+        // On Create bind holder
         @NonNull
         @Override
         public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             return new MovieViewHolder(itemView);
         }
 
+        // Bind view bolder
         @Override
         public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
             if (movieList != null && position >= 0 && position < movieList.size()) {
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // items getter
         @Override
         public int getItemCount() {
             return movieList != null ? movieList.size() : 0;
