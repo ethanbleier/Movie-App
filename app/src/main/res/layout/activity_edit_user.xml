@@ -11,24 +11,26 @@
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/watchlist"
+        android:layout_marginTop="84dp"
+        android:text="@string/watchlist_account"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvEditUserTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Edit user"
+        android:layout_marginTop="4dp"
+        android:text="@string/change_account_information_here"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="12sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
 
@@ -38,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="00/00/0000"
+        android:text="@string/_00_00_0000"
+        android:textColor='#0000FF'
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,17 +52,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
+        android:autofillHints="Edit password"
         android:background="@android:color/white"
-        android:hint="Edit username"
+        android:hint="@string/edit_username"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvEditUserTitle"
-        />
-
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -68,8 +72,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:autofillHints="Edit password"
         android:background="@android:color/white"
-        android:hint="Edit password"
+        android:hint="@string/edit_password"
         android:inputType="textPassword"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +82,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etUsername"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <Button
         android:id="@+id/btnUpdate"
@@ -87,14 +93,15 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/system_background_light"
-        android:text="update account info above"
-        android:textColor="@color/accent_color"
+        android:text="@string/update_account_info_above"
+        android:textColor="#00FF00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintVertical_bias="0.002" />
+        app:layout_constraintVertical_bias="0.102"
+        tools:ignore="VisualLintButtonSize" />
 
     <Button
         android:id="@+id/btnSignOut"
@@ -102,26 +109,28 @@
         android:layout_height="49dp"
         android:layout_marginTop="20dp"
         android:background="@android:color/background_light"
-        android:text="Sign out"
-        android:textColor="@android:color/holo_orange_dark"
+        android:text="@string/sign_out_2"
+        android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnUpdate"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.052"
+        tools:ignore="VisualLintButtonSize" />
 
     <Button
         android:id="@+id/btnDeleteUser"
         android:layout_width="345dp"
         android:layout_height="54dp"
         android:background="@android:color/background_light"
-        android:text="Delete account"
+        android:text="@string/delete_account"
         android:textColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignOut" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignOut"
+        tools:ignore="VisualLintButtonSize" />
 
     <Button
         android:id="@+id/btnBack"

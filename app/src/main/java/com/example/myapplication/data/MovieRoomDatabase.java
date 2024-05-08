@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Movie.class, User.class}, version = 4, exportSchema = false)
 public abstract class MovieRoomDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
+
     private static volatile MovieRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
 

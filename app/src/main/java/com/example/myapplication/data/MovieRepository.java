@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 public class MovieRepository {
-    private final MovieDao movieDao;
+    private static MovieDao movieDao = null;
+    private static LiveData<List<Movie>> movies;
     public Executor databaseWriteExecutor;
-    LiveData<List<Movie>> movies;
 
     public MovieRepository(Application application) {
         MovieRoomDatabase db = MovieRoomDatabase.getDatabase(application);
-        this.movieDao = db.movieDao();
-        movies = movieDao.getAll();
+        movieDao = db.movieDao();
+        movies = movieDao.getAllMovies();
     }
 
     public void deleteAllMovies() {
-        MovieRoomDatabase.databaseWriteExecutor.execute(this.movieDao::deleteAllMovies);
+        MovieRoomDatabase.databaseWriteExecutor.execute(movieDao::deleteAllMovies);
     }
 
-    public LiveData<List<Movie>> getMovies() {
-        return movies;
+    public LiveData<List<Movie>> getAllMovies() {
+        return movieDao.getAllMovies();
     }
 
     public Movie findByTitle(String title) {

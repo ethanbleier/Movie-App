@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.myapplication.data.model.Movie;
@@ -12,11 +13,15 @@ import java.util.List;
 
 @Dao
 public interface MovieDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Movie movie);
+
     @Query("DELETE FROM movie")
     void deleteAllMovies();
 
     @Query("SELECT * FROM movie")
-    LiveData<List<Movie>> getAll();
+    LiveData<List<Movie>> getAllMovies();
 
     @Query("SELECT * FROM movie WHERE title LIKE :title")
     Movie findByTitle(String title);
@@ -29,9 +34,6 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie WHERE year LIKE :year")
     Movie findByYear(String year);
-
-    @Insert()
-    long insert(Movie movie);
 
     @Delete
     void delete(Movie movie);

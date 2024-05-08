@@ -40,10 +40,10 @@ public class UpdateMovieActivity extends AppCompatActivity {
 
         //TODO: handle missing fields
 
-        movie.setmTitle(title);
-        movie.setmDirector(director);
-        movie.setmGenre(genre);
-        movie.setmYear(year);
+        movie.setTitle(title);
+        movie.setDirector(director);
+        movie.setGenre(genre);
+        movie.setYear(year);
 
         Toast.makeText(UpdateMovieActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
     }

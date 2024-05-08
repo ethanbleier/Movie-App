@@ -25,4 +25,15 @@
     <string name="back_to_sign_in_page">Back to Sign In Page</string>
     <string name="preference_file_key">daclinkPreferenceFileNameMovieList</string>
     <string name="preference_user_id_key">preference_user_id_key_movielist</string>
+    <string name="username">Username</string>
+    <string name="account">account</string>
+    <string name="edit_password">Edit password</string>
+    <string name="delete_account">Delete account</string>
+    <string name="sign_out_2">Sign out</string>
+    <string name="update_account_info_above">update account info above</string>
+    <string name="edit_username">Edit username</string>
+    <string name="_00_00_0000">00/00/0000</string>
+    <string name="edit_user">Edit user</string>
+    <string name="change_account_information_here">Change account information here</string>
+    <string name="watchlist_account">Watchlist account</string>
 </resources>

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "movie")
 public class Movie {
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -28,43 +28,43 @@ public class Movie {
         this.year = year;
     }
 
-    public int getmId() {
+    public int getId() {
         return id;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.id = mId;
     }
 
-    public String getmTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public String getmDirector() {
+    public String getDirector() {
         return director;
     }
 
-    public String getmGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public String getmYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setmTitle(String mTitle) {
+    public void setTitle(String mTitle) {
         this.title = mTitle;
     }
 
-    public void setmDirector(String mDirector) {
+    public void setDirector(String mDirector) {
         this.director = mDirector;
     }
 
-    public void setmGenre(String mGenre) {
+    public void setGenre(String mGenre) {
         this.genre = mGenre;
     }
 
-    public void setmYear(String mYear) {
+    public void setYear(String mYear) {
         this.year = mYear;
     }
 }

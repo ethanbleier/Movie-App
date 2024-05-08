@@ -1,7 +1,6 @@
 package com.example.myapplication.ui;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,29 +8,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
+import com.example.myapplication.data.model.User;
 import com.example.myapplication.databinding.ActivityEditUserBinding;
-import com.example.myapplication.databinding.ActivityMainBinding;
 
 import java.time.LocalDateTime;
 
 public class EditUserActivity extends AppCompatActivity {
     private UserDao userDao;
-    private UserRepository userRepository;
     private EditText etUsername, etPassword;
     private LocalDateTime date;
-    private ActivityEditUserBinding binding;
     private int loggedInUserId;
+    private UserRepository repository;
 
     private static final int LOGGED_OUT = -1;
     private static final int EDIT_USER_ACTIVITY_USER_ID = -1;
@@ -44,84 +38,122 @@ public class EditUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.binding = ActivityEditUserBinding.inflate(getLayoutInflater());
+        com.example.myapplication.databinding.ActivityEditUserBinding binding = ActivityEditUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        this.userRepository = new UserRepository(getApplication());
-
+        this.repository = new UserRepository(getApplication());
 
         Button btnUpdate = findViewById(R.id.btnUpdate);
         Button btnDeleteUser = findViewById(R.id.btnDeleteUser);
         Button btnBack = findViewById(R.id.btnBack);
-
+        Button btnSignOut = findViewById(R.id.btnSignOut);
 
         // UPDATE button
-        btnUpdate.setOnClickListener(v -> {
-            updateUser();
+        btnUpdate.setOnClickListener(v -> updateUser());
 
-            Toast.makeText(EditUserActivity.this, "Account info updated", Toast.LENGTH_SHORT).show();
-            navigateToMainActivity();
-        });
+        // SIGN OUT user button listener
+        btnSignOut.setOnClickListener(v -> showLogoutDialog());
 
-        // BACK button
+        // Activity BACK button listener
         btnBack.setOnClickListener(v -> navigateToMainActivity());
 
         // DELETE user button listener
-        btnDeleteUser.setOnClickListener(v -> {
-            userDao.deleteUser();
-
-            navigateToLoginActivity();
-        });
+        btnDeleteUser.setOnClickListener(v -> showDeleteDialog());
     }
 
+    // Delete dialog alert
+    private void showDeleteDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditUserActivity.this);
+        alertBuilder.setMessage("Erase your account?");
+
+        alertBuilder.setPositiveButton("Erase account", (dialog, which) -> deleteUser());
+
+        alertBuilder.setNegativeButton("Keep account", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
+
+    // Logout dialog Alert
     private void showLogoutDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditUserActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setMessage("Sign out?");
 
-        alertBuilder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                logoutUser();
-            }
-        });
+        alertBuilder.setPositiveButton("Sign out", (dialog, which) -> logoutUser());
 
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
+        alertBuilder.setNegativeButton("Stay signed in", (dialog, which) -> dialog.dismiss());
 
-        alertBuilder.create().show();
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
     }
 
+    // Sign out function
+    // goes to login activity
     private void logoutUser() {
         loggedInUserId = LOGGED_OUT;
         updateSharedPreferences();
         getIntent().putExtra(String.valueOf(EDIT_USER_ACTIVITY_USER_ID), LOGGED_OUT);
 
-        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext(), loggedInUserId));
+        Intent intent = new Intent(EditUserActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
+    // Delete user function
+    // goes to login activity
     private void deleteUser() {
         loggedInUserId = -1;
         updateSharedPreferences();
         getIntent().putExtra(String.valueOf(EDIT_USER_ACTIVITY_USER_ID), LOGGED_OUT);
 
-        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext(), -1));
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            User currentUser = repository.getLoggedInUser().getValue();
+            if (currentUser != null) {
+                repository.deleteUser(currentUser.getId());
+                runOnUiThread(() -> {
+                    Intent intent = new Intent(EditUserActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                });
+            } else {
+                runOnUiThread(() -> {
+                    Toast.makeText(EditUserActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
+    // This method performs database logic to update the username in the account settings.
     private void updateUser() {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
+        // check for blank fields
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(EditUserActivity.this, "fill in all fields please", Toast.LENGTH_SHORT).show();
         }
 
-        //TODO: update user info in data base
+        // Call the database to update user info
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+            User currentUser = repository.getLoggedInUser().getValue();
+            if (currentUser != null) {
+                // Update the user properties
+                currentUser.setUsername(username);
+                currentUser.setPassword(password);
+
+                // Save the updated user using the UserRepository
+                repository.update(currentUser);
+
+                runOnUiThread(() -> {
+                    Toast.makeText(EditUserActivity.this, "User information updated", Toast.LENGTH_SHORT).show();
+                    navigateToMainActivity();
+                });
+            } else {
+                runOnUiThread(() -> Toast.makeText(EditUserActivity.this, "User requested not found", Toast.LENGTH_SHORT).show());
+            }
+        });
 
     }
 
