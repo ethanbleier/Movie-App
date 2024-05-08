@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
             User user = this.repository.findByUsername(username);
 
@@ -96,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Login successful
                     User finalUser = user;
                     runOnUiThread(() -> {
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Welcome, " + finalUser.getUsername(), Toast.LENGTH_SHORT).show();
                         if (finalUser.isAdmin()) {
                             adminActivity();
                         } else {

@@ -33,6 +33,14 @@ public class UserRepository {
         UserRoomDatabase.databaseWriteExecutor.execute(userDao::deleteAllUsers);
     }
 
+    public void update(User user) {
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> userDao.update(user));
+    }
+
+    public void deleteUser(int loggedInUserId) {
+        UserRoomDatabase.databaseWriteExecutor.execute(() -> userDao.deleteUser(loggedInUserId));
+    }
+
     public long insert(User user) {
         return userDao.insert(user);
     }

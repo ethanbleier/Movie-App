@@ -37,13 +37,18 @@ public class SignupActivity extends AppCompatActivity {
         return text != null && !text.isEmpty();
     }
 
+    // does standard checks and compares both passwords to make sure they match
+    private boolean validInput(String p1, String p2) {
+        return (p1 != null && !p1.isEmpty() && p2 != null && !p2.isEmpty() && p1.equals(p2));
+    }
+
     // Method to read data from the text fields
     private void getFieldFromDisplayAndSignUp() {
         String username = binding.etUsername.getText().toString();
         String password = binding.etPassword.getText().toString();
         String confirmedPassword = binding.etcPassword.getText().toString();
 
-        if (validInput(username) && validInput(password) & validInput(confirmedPassword)) {
+        if (validInput(username) && validInput(password, confirmedPassword)) {
             this.username = username;
             this.password = password;
             signUp();
@@ -51,8 +56,8 @@ public class SignupActivity extends AppCompatActivity {
             if (!validInput(username)) {
                 Toast.makeText(SignupActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
             }
-            if (!validInput(password) || !validInput(confirmedPassword)) {
-                Toast.makeText(SignupActivity.this, "Invalid password/s", Toast.LENGTH_SHORT).show();
+            if (!validInput(password, confirmedPassword)) {
+                Toast.makeText(SignupActivity.this, "Passwords do not match or are blank", Toast.LENGTH_SHORT).show();
             }
         }
     }
