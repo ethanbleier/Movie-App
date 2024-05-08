@@ -1,49 +1,38 @@
 package com.example.myapplication.data;
 import android.app.Application;
-import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.myapplication.data.model.Movie;
-import com.example.myapplication.ui.MainActivity;
 
-import java.util.ArrayList;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.List;
+import java.util.concurrent.Executor;
 
 public class MovieRepository {
     private final MovieDao movieDao;
-    private final ArrayList<Movie> allMovies;
+    public Executor databaseWriteExecutor;
+    LiveData<List<Movie>> movies;
 
     public MovieRepository(Application application) {
         MovieRoomDatabase db = MovieRoomDatabase.getDatabase(application);
         this.movieDao = db.movieDao();
-        this.allMovies = (ArrayList<Movie>) this.movieDao.getAll();
+        movies = movieDao.getAll();
     }
 
     public void deleteAllMovies() {
         MovieRoomDatabase.databaseWriteExecutor.execute(this.movieDao::deleteAllMovies);
     }
 
-    public ArrayList<Movie> getAllMovies() {
-        Future<ArrayList<Movie>> future = MovieRoomDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<Movie>>() {
-                    @Override
-                    public ArrayList<Movie> call() throws Exception {
-                        return (ArrayList<Movie>) movieDao.getAll();
-                    }
-                });
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.i(MainActivity.TAG, "Problem getting all movies in the movie repository");
-        }
-        return null;
+    public LiveData<List<Movie>> getMovies() {
+        return movies;
     }
 
-    void insert(Movie movie) {
-        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
-            movieDao.insert(movie);
-        });
+    public Movie findByTitle(String title) {
+        return movieDao.findByTitle(title);
+    }
+
+    public long insert(Movie movie) {
+        return movieDao.insert(movie);
     }
 
     void delete(Movie movie) {

@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,7 +16,7 @@ public interface MovieDao {
     void deleteAllMovies();
 
     @Query("SELECT * FROM movie")
-    List<Movie> getAll();
+    LiveData<List<Movie>> getAll();
 
     @Query("SELECT * FROM movie WHERE title LIKE :title")
     Movie findByTitle(String title);
@@ -30,7 +31,7 @@ public interface MovieDao {
     Movie findByYear(String year);
 
     @Insert()
-    void insert(Movie movie);
+    long insert(Movie movie);
 
     @Delete
     void delete(Movie movie);

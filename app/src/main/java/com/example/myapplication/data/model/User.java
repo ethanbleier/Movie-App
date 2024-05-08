@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "user")
 public class User {
 
     @PrimaryKey(autoGenerate = true)
@@ -39,7 +39,7 @@ public class User {
 
     // ideally the object would have a "final Boolean IsAdmin"
     // and this method would create a new object but this is fine for now
-    public void makeAdmin() {
+    public void promote() {
         this.isAdmin = true;
     }
 

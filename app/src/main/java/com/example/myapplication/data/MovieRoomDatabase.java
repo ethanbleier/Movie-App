@@ -15,7 +15,7 @@ import com.example.myapplication.data.model.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Movie.class, User.class, Rating.class, Review.class}, version = 2, exportSchema = false)
+@Database(entities = {Movie.class, User.class}, version = 4, exportSchema = false)
 public abstract class MovieRoomDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
     private static volatile MovieRoomDatabase INSTANCE;
@@ -30,6 +30,7 @@ public abstract class MovieRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     MovieRoomDatabase.class, "movie_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
