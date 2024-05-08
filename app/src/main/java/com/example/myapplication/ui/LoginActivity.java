@@ -15,10 +15,9 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private UserRepository repository;
 
-    private static final String LOGIN_ACTIVITY_USER_ID = "LOGIN_ACTIVITY_USER_ID";
+    String username = "", password = "";
 
-    private String username = "";
-    private String password = "";
+    private static final String LOGIN_ACTIVITY_USER_ID = "LOGIN_ACTIVITY_USER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = new UserRepository(getApplication());
+        int userId = getIntent().getIntExtra(LOGIN_ACTIVITY_USER_ID, -1);
 
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        intent.putExtra(LOGIN_ACTIVITY_USER_ID, userId);
+//        startActivity(intent);
 
         // Go to Sign Up Button Listener
         binding.btnSignUp.setOnClickListener(v -> signUpActivity());
@@ -56,12 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to read data from the text fields
     private void getFieldFromDisplayAndLogin() {
-        String username = binding.etUsername.getText().toString();
-        String password = binding.etPassword.getText().toString();
+        this.username = binding.etUsername.getText().toString();
+        this.password = binding.etPassword.getText().toString();
 
         if (validInput(username) && validInput(password)) {
-            this.username = username;
-            this.password = password;
             login();
         } else {
             if (!validInput(username)) {
@@ -75,31 +76,41 @@ public class LoginActivity extends AppCompatActivity {
 
     // Primary Login Method
     private void login() {
-        String username = binding.etUsername.getText().toString();
-        String password = binding.etPassword.getText().toString();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+        if (this.username.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (this.password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            User user = repository.findByUsernameAndPassword(username, password);
+            User user = this.repository.findByUsername(username);
 
             if (user != null) {
-                // Login successful
-                runOnUiThread(() -> {
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    if (user.isAdmin()) {
-                        adminActivity();
-                    } else {
-                        landingActivity();
-                    }
-                });
+                user = this.repository.findByUsernameAndPassword(username, password);
+                if (user != null) {
+                    // Login successful
+                    User finalUser = user;
+                    runOnUiThread(() -> {
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        if (finalUser.isAdmin()) {
+                            adminActivity();
+                        } else {
+                            landingActivity();
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(LoginActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
+                    });
+                }
             } else {
-                // Login failed
                 runOnUiThread(() -> {
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
                 });
             }
         });

@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.data.UserDao;
 import com.example.myapplication.data.UserRepository;
 import com.example.myapplication.data.UserRoomDatabase;
 import com.example.myapplication.databinding.ActivitySignupBinding;
@@ -101,6 +99,10 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * ==== Navigation methods ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====
+     */
 
     private void userLandingActivity() {
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);

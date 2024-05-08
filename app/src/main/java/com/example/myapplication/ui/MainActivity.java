@@ -1,95 +1,148 @@
 package com.example.myapplication.ui;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.data.MovieRepository;
+import com.example.myapplication.data.MovieRoomDatabase;
 import com.example.myapplication.data.UserRepository;
-import com.example.myapplication.data.UserRoomDatabase;
+import com.example.myapplication.data.model.Movie;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.data.model.User;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "MAIN_ACTIVITY_USER_ID";
 
-    static final String SHARED_PREFERENCE_USERID_KEY = "SHARED_PREFERENCE_USER_ID_KEY";
-    static final String SAVED_INSTANCE_STATE_USERID_KEY = "SAVED_INSTANCE_STATE_USERID_KEY";
-
-    private static final int LOGGED_OUT = -1;
-    private ActivityMainBinding binding;
-
     private UserRepository userRepository;
+    private MovieRepository movieRepository;
 
     public static final String TAG = "DAC_MOVIE-APP";
 
     private User user;
-    private int loggedInUserId;
 
-    Button btnUsername;
+    RecyclerView recyclerViewMovies;
+    MovieAdapter movieAdapter;
+    private List<Movie> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.myapplication.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent = getIntent();
 
-        userRepository = new UserRepository(getApplication());
+        // Repository Initialization
+        this.userRepository = new UserRepository(getApplication());
+        this.movieRepository = new MovieRepository(getApplication());
+        int loggedInUserId = intent.getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
 
+        // Movie recycler initialization
+        this.recyclerViewMovies = findViewById(R.id.recyclerview);
+        this.movieAdapter = new MovieAdapter(movieList);
+        this.recyclerViewMovies.setAdapter(movieAdapter);
+
+        // Driver functions
         loginUser();
+        loadMovies();
 
-        binding.addButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "add movie info next!", Toast.LENGTH_SHORT).show();
-                navigateToAddMovieActivity();
-            }
-        });
-
+        // Add movie button
         findViewById(R.id.add_button).setOnClickListener(v -> navigateToAddMovieActivity());
+
+        // Account button
+        findViewById(R.id.btnAccount).setOnClickListener(v -> navigateToEditUserActivity());
     }
 
-    private void loginUser() {
-        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
-            LiveData<User> userObserver = userRepository.getLoggedInUser();
+    // loadMovies will update the view when the user inserts/deletes another movie
+    @SuppressLint("NotifyDataSetChanged")
+    private void loadMovies() {
+        MovieRoomDatabase.databaseWriteExecutor.execute(() -> {
+            LiveData<List<Movie>> moviesLiveData = movieRepository.getAllMovies();
             runOnUiThread(() -> {
-                userObserver.observe(this, user -> {
-                    this.user = user;
-                    if (this.user != null) {
-                        invalidateOptionsMenu();
-                    } else {
-                        // No user logged in
-                    }
+                moviesLiveData.observe(this, movies -> {
+                    movieList.clear();
+                    movieList.addAll(movies);
+                    movieAdapter.notifyDataSetChanged();
                 });
             });
         });
     }
 
-    private void updateSharedPreferences() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPreferenceEditor = sharedPreferences.edit();
-        sharedPreferenceEditor.putInt(getString(R.string.preference_user_id_key), loggedInUserId);
-        sharedPreferenceEditor.apply();
+    // Login user method
+    private void loginUser() {
+        LiveData<User> userObserver = userRepository.getLoggedInUser();
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (this.user != null) {
+                invalidateOptionsMenu();
+            }
+        });
     }
 
-    static Intent mainActivityIntentFactory(Context context, int userId) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(String.valueOf(MAIN_ACTIVITY_USER_ID), userId);
-        return intent;
+    // Adapts movies into the Recycler view
+    private static class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+        private final List<Movie> movieList;
+
+        public MovieAdapter(List<Movie> movieList) {
+            this.movieList = movieList;
+        }
+
+        @NonNull
+        @Override
+        public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_movie, parent, false);
+            return new MovieViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+            if (movieList != null && position >= 0 && position < movieList.size()) {
+                Movie movie = movieList.get(position);
+                holder.textViewTitle.setText(movie.getTitle());
+                holder.textViewDirector.setText(movie.getDirector());
+                holder.textViewGenre.setText(movie.getGenre());
+                holder.textViewYear.setText(movie.getYear());
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return movieList != null ? movieList.size() : 0;
+        }
+
+        // ViewHolder for the movie attributes. extends the RecyclerViewViewHolder
+        public static class MovieViewHolder extends RecyclerView.ViewHolder {
+            TextView textViewTitle;
+            TextView textViewDirector;
+            TextView textViewGenre;
+            TextView textViewYear;
+
+            // Constructor that takes a position in the recycler and sets the movie object attributes
+            public MovieViewHolder(@NonNull View itemView) {
+                super(itemView);
+                textViewTitle = itemView.findViewById(R.id.textViewTitle);
+                textViewDirector = itemView.findViewById(R.id.textViewDirector);
+                textViewGenre = itemView.findViewById(R.id.textViewGenre);
+                textViewYear = itemView.findViewById(R.id.textViewYear);
+            }
+        }
     }
+
+    /**
+     * ==== Navigation methods ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====
+     */
 
     private void navigateToAddMovieActivity() {
         Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);

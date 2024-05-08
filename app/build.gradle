@@ -42,6 +42,7 @@ dependencies {
     implementation libs.room.runtime
     implementation libs.activity
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
+    implementation libs.androidx.recyclerview
     androidTestImplementation libs.androidx.room.testing
 
     // Lifecycle components

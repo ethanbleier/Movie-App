@@ -69,7 +69,7 @@ public class AddMovieActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (movieId != -1) {
                     // Insertion passed
-                    Toast.makeText(AddMovieActivity.this, newMovie.getmTitle() + " added to Your List.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddMovieActivity.this, newMovie.getTitle() + " added to Your List.", Toast.LENGTH_SHORT).show();
                     navigateToMainActivity();
                 } else {
                     // Insertion failed

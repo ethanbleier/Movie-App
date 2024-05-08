@@ -49,7 +49,6 @@ public class EditUserActivity extends AppCompatActivity {
 
         this.userRepository = new UserRepository(getApplication());
 
-
         Button btnUpdate = findViewById(R.id.btnUpdate);
         Button btnDeleteUser = findViewById(R.id.btnDeleteUser);
         Button btnBack = findViewById(R.id.btnBack);

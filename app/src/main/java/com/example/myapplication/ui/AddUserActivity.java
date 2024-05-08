@@ -19,7 +19,7 @@ public class AddUserActivity extends AppCompatActivity {
     private UserDao userDao;
     private EditText etUsername, etPassword;
 
-    // No idea what this is but it seems nice
+    // IDE recommended fix, No idea what this is but it seems ok.
     AtomicBoolean isAdmin = new AtomicBoolean(false);
 
     @Override
